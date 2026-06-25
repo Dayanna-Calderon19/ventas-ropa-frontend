@@ -2,7 +2,7 @@ import api from "./api.js";
 
 export const listarProductos = async (filtros = {}) => {
     const { data } = await api.get("/productos", { params: filtros });
-    return data.data.data;
+    return data.data; // Devuelve el objeto { data: [...], meta: {...} }
 };
 
 export const obtenerProducto = async (id) => {

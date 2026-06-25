@@ -96,7 +96,10 @@ const SeccionBanner = () => (
 
 const HomePage = () => {
   const { datos: productosDestacados, cargando: cargandoProductos } = useFetch(
-    () => listarProductos({ destacado: 'true', limit: 8 }),
+    async () => {
+        const respuesta = await listarProductos({ destacado: 'true', limit: 8 });
+        return respuesta.data;
+    },
     [],
     { datosIniciales: null }
   )
