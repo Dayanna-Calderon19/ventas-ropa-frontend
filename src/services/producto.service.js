@@ -2,7 +2,7 @@ import api from "./api.js";
 
 export const listarProductos = async (filtros = {}) => {
     const { data } = await api.get("/productos", { params: filtros });
-    return data.data;
+    return data.data.data;
 };
 
 export const obtenerProducto = async (id) => {
@@ -20,17 +20,29 @@ export const actualizarProducto = async (id, payload) => {
     return data.data;
 };
 
+export const toggleActivoProducto = async (id) => {
+    const { data } = await api.patch(`/productos/${id}/toggle-activo`);
+    return data.data;
+};
+
 export const eliminarProducto = async (id) => {
-    const { data } = await api.delete(`/productos/${id}`);
-    return data;
+    return toggleActivoProducto(id);
 };
 
-export const listarCategorias = async () => {
-    const { data } = await api.get("/productos/categorias");
+// Variantes
+export const crearVariante = async (productoId, payload) => {
+    const { data } = await api.post(`/productos/${productoId}/variantes`, payload);
     return data.data;
 };
 
-export const crearCategoria = async (payload) => {
-    const { data } = await api.post("/productos/categorias", payload);
+export const actualizarVariante = async (id, payload) => {
+    const { data } = await api.put(`/productos/variantes/${id}`, payload);
     return data.data;
 };
+
+export const toggleActivoVariante = async (id) => {
+    const { data } = await api.patch(`/productos/variantes/${id}/toggle-activo`);
+    return data.data;
+};
+
+
