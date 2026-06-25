@@ -91,6 +91,8 @@ export const Navbar = () => {
                                                 <p className="text-sm font-medium text-neutral-900 truncate">{usuario?.nombre}</p>
                                                 <p className="text-xs text-neutral-500 truncate">{usuario?.correo}</p>
                                             </div>
+                                            
+                                            {/* Opciones según Rol */}
                                             {usuario?.rol === 'ADMIN' && (
                                                 <Link
                                                     to="/admin"
@@ -101,20 +103,49 @@ export const Navbar = () => {
                                                     Panel Admin
                                                 </Link>
                                             )}
-                                            <Link
-                                                to="/cliente/pedidos"
-                                                className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                                                onClick={() => setMenuUsuarioAbierto(false)}
-                                            >
-                                                Mis pedidos
-                                            </Link>
-                                            <Link
-                                                to="/cliente/perfil"
-                                                className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                                                onClick={() => setMenuUsuarioAbierto(false)}
-                                            >
-                                                Mi perfil
-                                            </Link>
+
+                                            {usuario?.rol === 'VENDEDOR' && (
+                                                <Link
+                                                    to="/vendedor"
+                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-[#c4956a] font-semibold hover:bg-neutral-50 transition-colors"
+                                                    onClick={() => setMenuUsuarioAbierto(false)}
+                                                >
+                                                    <RiDashboardLine size={16} />
+                                                    Panel Vendedor
+                                                </Link>
+                                            )}
+
+                                            {/* Opciones de Cliente */}
+                                            {usuario?.rol === 'CLIENTE' && (
+                                                <>
+                                                    <Link
+                                                        to="/cliente/pedidos"
+                                                        className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                                                        onClick={() => setMenuUsuarioAbierto(false)}
+                                                    >
+                                                        Mis pedidos
+                                                    </Link>
+                                                    <Link
+                                                        to="/cliente/perfil"
+                                                        className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                                                        onClick={() => setMenuUsuarioAbierto(false)}
+                                                    >
+                                                        Mi perfil
+                                                    </Link>
+                                                </>
+                                            )}
+
+                                            {/* Opción de perfil genérica para admin/vendedor si es necesario */}
+                                            {(usuario?.rol === 'ADMIN' || usuario?.rol === 'VENDEDOR') && (
+                                                <Link
+                                                    to={`/${usuario.rol.toLowerCase()}/perfil`}
+                                                    className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                                                    onClick={() => setMenuUsuarioAbierto(false)}
+                                                >
+                                                    Mi perfil
+                                                </Link>
+                                            )}
+                                            
                                             <button
                                                 onClick={manejarLogout}
                                                 className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-neutral-50 transition-colors"
