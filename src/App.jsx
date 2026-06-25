@@ -1,16 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { AuthProvider } from './context/AuthContext.jsx'
+import { CarritoProvider } from './context/CarritoContext.jsx'
+import { ToastProvider } from './components/ui/Toast.jsx'
+import { ErrorBoundary } from './components/shared/ErrorBoundary.jsx'
+import AppRouter from './routes/AppRouter.jsx'
+import './index.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      
-    </>
+    <ErrorBoundary>
+      <AuthProvider>
+        <CarritoProvider>
+          <ToastProvider>
+            <AppRouter />
+          </ToastProvider>
+        </CarritoProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }
 

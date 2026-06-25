@@ -17,9 +17,9 @@ export const obtenerProductosMasVendidos = async (filtros = {}) => {
     return data.data;
 };
 
-export const obtenerIngresosMensuales = async (año) => {
+export const obtenerIngresosMensuales = async (anio) => {
     const { data } = await api.get("/reportes/ingresos-mensuales", {
-        params: { año },
+        params: { año: anio },
     });
     return data.data;
 };

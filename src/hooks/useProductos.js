@@ -8,8 +8,12 @@ import {
     crearProducto,
     actualizarProducto,
     eliminarProducto,
-    listarCategorias,
+    toggleActivoProducto,
+    crearVariante,
+    actualizarVariante,
+    toggleActivoVariante,
 } from "../services/producto.service.js";
+import { listarCategorias } from "../services/categoria.service.js";
 
 export const useProductos = (filtrosIniciales = {}) => {
     return usePaginacion(listarProductos, filtrosIniciales);
@@ -22,7 +26,10 @@ export const useProducto = (id) => {
 };
 
 export const useCategorias = () => {
-    return useFetch(listarCategorias, [], { datosIniciales: [] });
+    return useFetch(async () => {
+        const resultado = await listarCategorias();
+        return resultado.data;
+    }, [], { datosIniciales: [] });
 };
 
 export const useMutacionProducto = () => {
@@ -32,14 +39,46 @@ export const useMutacionProducto = () => {
         (payload) => ejecutar(crearProducto(payload)),
         [ejecutar],
     );
+
     const actualizar = useCallback(
         (id, payload) => ejecutar(actualizarProducto(id, payload)),
         [ejecutar],
     );
+
     const eliminar = useCallback(
         (id) => ejecutar(eliminarProducto(id)),
         [ejecutar],
     );
 
-    return { cargando, error, crear, actualizar, eliminar };
+    const toggleActivo = useCallback(
+        (id) => ejecutar(toggleActivoProducto(id)),
+        [ejecutar],
+    );
+
+    const crearVar = useCallback(
+        (pId, payload) => ejecutar(crearVariante(pId, payload)),
+        [ejecutar],
+    );
+
+    const actualizarVar = useCallback(
+        (id, payload) => ejecutar(actualizarVariante(id, payload)),
+        [ejecutar],
+    );
+
+    const toggleActivoVar = useCallback(
+        (id) => ejecutar(toggleActivoVariante(id)),
+        [ejecutar],
+    );
+
+    return {
+        cargando,
+        error,
+        crear,
+        actualizar,
+        eliminar,
+        toggleActivo,
+        crearVar,
+        actualizarVar,
+        toggleActivoVar,
+    };
 };
