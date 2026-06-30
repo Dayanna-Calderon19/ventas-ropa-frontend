@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { RiSearchLine, RiEyeLine, RiUserLine } from 'react-icons/ri'
+import { RiSearchLine, RiEyeLine, RiUserLine, RiEditLine, RiDeleteBinLine, RiCheckboxCircleLine, RiCloseCircleLine } from 'react-icons/ri'
 import { useUsuarios, useMutacionUsuario } from '../../hooks/useUsuarios.js'
+import { obtenerCliente } from '../../services/cliente.service.js'
 import { CabeceraSeccion } from '../../components/admin/CabeceraSeccion.jsx'
 import { TablaBase } from '../../components/admin/TablaBase.jsx'
 import { Input } from '../../components/ui/Input.jsx'
@@ -11,8 +12,22 @@ import { useBusqueda } from '../../hooks/useBusqueda.js'
 import { Paginacion } from '../../components/ui/Paginacion.jsx'
 import { formatearFecha } from '../../utils/formato.js'
 
-const DetalleCliente = ({ cliente }) => {
-    if (!cliente) return null
+const DetalleCliente = ({ clienteId }) => {
+    const [cliente, setCliente] = useState(null)
+    const [cargando, setCargando] = useState(true)
+
+    useEffect(() => {
+        if (clienteId) {
+            setCargando(true)
+            obtenerCliente(clienteId)
+                .then(data => setCliente(data))
+                .catch(err => console.error(err))
+                .finally(() => setCargando(false))
+        }
+    }, [clienteId])
+
+    if (cargando) return <p className="text-sm text-neutral-500">Cargando detalles...</p>
+    if (!cliente) return <p className="text-sm text-red-500">No se pudo cargar el cliente.</p>
 
     return (
         <div className="flex flex-col gap-6">
@@ -68,7 +83,7 @@ const DetalleCliente = ({ cliente }) => {
 }
 
 const ClientesPage = () => {
-    const modalDetalle = useModal()
+    const modalDetalle = useModal('admin_cliente_detalle')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, aplicarFiltros, irAPagina, recargar } = useUsuarios({ rol: 'CLIENTE' })
     const { toggleActivo, cargando: mutando } = useMutacionUsuario()
@@ -108,7 +123,9 @@ const ClientesPage = () => {
                 <button
                     onClick={(e) => { e.stopPropagation(); manejarToggleActivo(c.id) }}
                     disabled={mutando}
+                    className="flex items-center gap-1"
                 >
+                    {c.activo ? <RiCheckboxCircleLine className="text-green-500" size={16}/> : <RiCloseCircleLine className="text-red-500" size={16}/>}
                     <Badge variante={c.activo ? 'exito' : 'error'}>{c.activo ? 'Activo' : 'Inactivo'}</Badge>
                 </button>
             )
@@ -116,12 +133,27 @@ const ClientesPage = () => {
         {
             clave: 'acciones', titulo: '',
             render: (c) => (
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-2">
                     <button
-                        onClick={() => modalDetalle.abrir(c)}
+                        onClick={() => modalDetalle.abrir(c.id)}
                         className="p-1.5 rounded text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                        title="Ver detalles"
                     >
                         <RiEyeLine size={16} />
+                    </button>
+                    <button
+                        onClick={() => {/* Implementar lógica de editar */}}
+                        className="p-1.5 rounded text-neutral-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        title="Editar"
+                    >
+                        <RiEditLine size={16} />
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); manejarToggleActivo(c.id) }}
+                        className="p-1.5 rounded text-neutral-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        title={c.activo ? 'Desactivar' : 'Activar'}
+                    >
+                        <RiDeleteBinLine size={16} />
                     </button>
                 </div>
             )
@@ -159,11 +191,11 @@ const ClientesPage = () => {
 
             <Modal
                 abierto={modalDetalle.abierto}
-                onCerrar={modalDetalle.cerrar}
+                cerrar={modalDetalle.cerrar}
                 titulo="Detalle del Cliente"
                 tamanio="sm"
             >
-                <DetalleCliente cliente={modalDetalle.datos} />
+                <DetalleCliente clienteId={modalDetalle.datos} />
             </Modal>
         </div>
     )

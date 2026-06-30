@@ -9,6 +9,8 @@ import { Badge } from '../../components/ui/Badge.jsx'
 import { Boton } from '../../components/ui/Boton.jsx'
 import { Input } from '../../components/ui/Input.jsx'
 import { Alerta } from '../../components/ui/Alerta.jsx'
+import { Modal } from '../../components/ui/Modal.jsx'
+import { cambiarContrasena } from '../../services/auth.service.js'
 
 const validarPerfil = ({ nombre, correo }) => {
     const errores = {}
@@ -18,10 +20,13 @@ const validarPerfil = ({ nombre, correo }) => {
 }
 
 const ConfiguracionPage = () => {
-    const { usuario } = useAuth()
-    const { exito } = useToast()
+    const { usuario, setUsuario } = useAuth()
+    const { exito, error: mostrarError } = useToast()
     const { actualizarMiPerfil, cargando, error } = useMutacionUsuario()
-    const { valores, errores, manejarCambio, establecerValores, manejarEnvio } = useFormulario({
+    const [modalAbierto, setModalAbierto] = useState(false)
+    const [contrasena, setContrasena] = useState({ actual: '', nueva: '' })
+
+    const { valores, errores, manejarCambio, establecerValores, manejarEnvio, enviando } = useFormulario({
         nombre: '',
         correo: '',
         telefono: ''
@@ -40,9 +45,21 @@ const ConfiguracionPage = () => {
     const manejarGuardarPerfil = async (e) => {
         e.preventDefault()
         await manejarEnvio(async (datos) => {
-            await actualizarMiPerfil(datos)
+            const perfilActualizado = await actualizarMiPerfil(datos)
+            setUsuario(perfilActualizado) // Update context
             exito('Perfil actualizado correctamente')
         })
+    }
+
+    const manejarCambioContrasena = async () => {
+        try {
+            await cambiarContrasena({ contrasenaActual: contrasena.actual, contrasenaNueva: contrasena.nueva })
+            exito('Contraseña actualizada correctamente')
+            setModalAbierto(false)
+            setContrasena({ actual: '', nueva: '' })
+        } catch (err) {
+            mostrarError(err.response?.data?.message || 'Error al cambiar contraseña')
+        }
     }
 
     return (
@@ -68,7 +85,7 @@ const ConfiguracionPage = () => {
                                 </div>
                                 <Input label="Teléfono" name="telefono" value={valores.telefono} onChange={manejarCambio} />
                                 <div className="flex justify-end pt-2">
-                                    <Boton type="submit" variante="primario" cargando={cargando} icono={<RiSaveLine size={16} />}>
+                                    <Boton type="submit" variante="primario" cargando={enviando} icono={<RiSaveLine size={16} />}>
                                         Guardar Perfil
                                     </Boton>
                                 </div>
@@ -83,7 +100,7 @@ const ConfiguracionPage = () => {
                         </div>
                         <div className="p-6">
                             <p className="text-sm text-neutral-500 mb-4">Cambia tu contraseña periódicamente para mantener tu cuenta segura.</p>
-                            <Boton variante="secundario">Cambiar Contraseña</Boton>
+                            <Boton variante="secundario" onClick={() => setModalAbierto(true)}>Cambiar Contraseña</Boton>
                         </div>
                     </section>
                 </div>
@@ -104,21 +121,16 @@ const ConfiguracionPage = () => {
                             <p className="flex justify-between"><span>ID de Usuario:</span> <span className="font-mono text-[10px]">{usuario?.id}</span></p>
                         </div>
                     </section>
-
-                    <section className="bg-white border border-neutral-200 rounded-lg p-6">
-                        <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-4">Información del Sistema</h4>
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-3">
-                                <RiSettings3Line className="text-neutral-400" />
-                                <div className="text-sm">
-                                    <p className="font-medium text-neutral-900">Versión 1.0.0</p>
-                                    <p className="text-neutral-500 text-xs">Sistema actualizado</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </div>
+
+            <Modal abierto={modalAbierto} cerrar={() => setModalAbierto(false)} titulo="Cambiar Contraseña">
+                <div className="space-y-4">
+                    <Input label="Contraseña actual" type="password" value={contrasena.actual} onChange={(e) => setContrasena(prev => ({...prev, actual: e.target.value}))} />
+                    <Input label="Nueva contraseña" type="password" value={contrasena.nueva} onChange={(e) => setContrasena(prev => ({...prev, nueva: e.target.value}))} />
+                    <Boton variante="primario" onClick={manejarCambioContrasena}>Actualizar Contraseña</Boton>
+                </div>
+            </Modal>
         </div>
     )
 }

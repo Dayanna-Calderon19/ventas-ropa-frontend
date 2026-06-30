@@ -99,8 +99,8 @@ const FormProducto = ({ inicial, onGuardar, cargando, error }) => {
 
 const ProductosPage = () => {
     const { exito } = useToast()
-    const modalForm = useModal()
-    const modalEliminar = useModal()
+    const modalForm = useModal('admin_producto_form')
+    const modalEliminar = useModal('admin_producto_eliminar')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, aplicarFiltros, irAPagina, recargar } = useProductos()
     const { crear, actualizar, eliminar, cargando: mutando, error } = useMutacionProducto()

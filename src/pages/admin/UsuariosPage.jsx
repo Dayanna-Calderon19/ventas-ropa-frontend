@@ -90,7 +90,7 @@ const FormUsuario = ({ inicial, onGuardar, cargando, error }) => {
 
 const UsuariosPage = () => {
     const { exito } = useToast()
-    const modalForm = useModal()
+    const modalForm = useModal('admin_usuario_form')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, aplicarFiltros, irAPagina, recargar } = useUsuariosGestion()
     const { crearGestion, actualizarGestion, toggleActivoGestion, cargando: mutando, error } = useMutacionUsuario()

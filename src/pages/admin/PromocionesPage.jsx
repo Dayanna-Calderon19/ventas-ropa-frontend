@@ -132,8 +132,8 @@ const FormPromocion = ({ inicial, onGuardar, cargando, error }) => {
 
 const PromocionesPage = () => {
     const { exito } = useToast()
-    const modalForm = useModal()
-    const modalEliminar = useModal()
+    const modalForm = useModal('admin_promocion_form')
+    const modalEliminar = useModal('admin_promocion_eliminar')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, aplicarFiltros, irAPagina, recargar } = usePromociones()
     const { crear, actualizar, eliminar, cargando: mutando, error } = useMutacionPromocion()

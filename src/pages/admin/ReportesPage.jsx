@@ -24,7 +24,7 @@ const ReportesPage = () => {
                 titulo="Reportes y Análisis"
                 descripcion="Visualiza el rendimiento de tu negocio"
                 accion={
-                    <Boton variante="secundario" icono={<RiDownload2Line size={16} />}>
+                    <Boton variante="secundario" icono={<RiDownload2Line size={16} />} onClick={() => window.print()}>
                         Exportar PDF
                     </Boton>
                 }

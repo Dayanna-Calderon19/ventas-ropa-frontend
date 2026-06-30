@@ -73,8 +73,8 @@ const FormCategoria = ({ inicial, onGuardar, cargando, error }) => {
 
 const CategoriasPage = () => {
     const { exito } = useToast()
-    const modalForm = useModal()
-    const modalEliminar = useModal()
+    const modalForm = useModal('admin_categoria_form')
+    const modalEliminar = useModal('admin_categoria_eliminar')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, aplicarFiltros, irAPagina, recargar } = useCategoriasPaginadas()
     const { crear, actualizar, eliminar, cargando: mutando, error } = useMutacionCategoria()
