@@ -11,7 +11,7 @@ export const esContrasenaValida = (contrasena) => {
 };
 
 export const esTelefonoValido = (telefono) => {
-    return /^\+?[\d\s\-()]{7,15}$/.test(telefono);
+    return /^\d{9}$/.test(telefono);
 };
 
 export const esUUID = (valor) => {
@@ -21,7 +21,7 @@ export const esUUID = (valor) => {
 };
 
 export const esPrecioValido = (valor) => {
-    return !isNaN(valor) && parseFloat(valor) >= 0;
+    return !isNaN(valor) && parseFloat(valor) >= 0;cd
 };
 
 export const esStockValido = (valor) => {
