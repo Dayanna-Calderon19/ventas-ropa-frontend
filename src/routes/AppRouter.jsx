@@ -12,6 +12,7 @@ import VendedorLayout from '../layouts/VendedorLayout.jsx'
 const HomePage = lazy(() => import('../pages/public/HomePage.jsx'))
 const CatalogoPage = lazy(() => import('../pages/public/CatalogoPage.jsx'))
 const ProductoDetallePage = lazy(() => import('../pages/public/ProductoDetallePage.jsx'))
+const PromocionesPublicasPage = lazy(() => import('../pages/public/PromocionesPage.jsx'))
 
 const LoginPage = lazy(() => import('../pages/auth/LoginPage.jsx'))
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage.jsx'))
@@ -28,18 +29,22 @@ const CategoriasPage = lazy(() => import('../pages/admin/CategoriasPage.jsx'))
 const InventarioPage = lazy(() => import('../pages/admin/InventarioPage.jsx'))
 const VentasPage = lazy(() => import('../pages/admin/VentasPage.jsx'))
 const PedidosPage = lazy(() => import('../pages/admin/PedidosPage.jsx'))
-const PromocionesPage = lazy(() => import('../pages/admin/PromocionesPage.jsx'))
+const PromocionesAdminPage = lazy(() => import('../pages/admin/PromocionesPage.jsx'))
 const ClientesPage = lazy(() => import('../pages/admin/ClientesPage.jsx'))
 const UsuariosPage = lazy(() => import('../pages/admin/UsuariosPage.jsx'))
 const ReportesPage = lazy(() => import('../pages/admin/ReportesPage.jsx'))
 const ConfiguracionPage = lazy(() => import('../pages/admin/ConfiguracionPage.jsx'))
 
+const DetalleVentaAdminPage = lazy(() => import('../pages/admin/DetalleVentaPage.jsx'))
+const DetallePedidoAdminPage = lazy(() => import('../pages/admin/DetallePedidoPage.jsx'))
+
 const VendedorDashboard = lazy(() => import('../pages/vendedor/VendedorDashboard.jsx'))
 const NuevaVentaPage = lazy(() => import('../pages/vendedor/NuevaVentaPage.jsx'))
 const HistorialVentasPage = lazy(() => import('../pages/vendedor/HistorialVentasPage.jsx'))
-const DetalleVentaPage = lazy(() => import('../pages/vendedor/DetalleVentaPage.jsx'))
+const DetalleVentaVendedorPage = lazy(() => import('../pages/vendedor/DetalleVentaPage.jsx'))
 const InventarioVendedorPage = lazy(() => import('../pages/vendedor/InventarioVendedorPage.jsx'))
 const ClientesVendedorPage = lazy(() => import('../pages/vendedor/ClientesVendedorPage.jsx'))
+const PerfilVendedorPage = lazy(() => import('../pages/vendedor/PerfilVendedorPage.jsx'))
 
 
 const AppRouter = () => {
@@ -51,6 +56,7 @@ const AppRouter = () => {
                         <Route index element={<HomePage />} />
                         <Route path="catalogo" element={<CatalogoPage />} />
                         <Route path="producto/:id" element={<ProductoDetallePage />} />
+                        <Route path="promociones" element={<PromocionesPublicasPage />} />
                     </Route>
 
                     <Route element={<AuthLayout />}>
@@ -86,8 +92,10 @@ const AppRouter = () => {
                         <Route path="categorias" element={<CategoriasPage />} />
                         <Route path="inventario" element={<InventarioPage />} />
                         <Route path="ventas" element={<VentasPage />} />
+                        <Route path="ventas/:id" element={<DetalleVentaAdminPage />} />
                         <Route path="pedidos" element={<PedidosPage />} />
-                        <Route path="promociones" element={<PromocionesPage />} />
+                        <Route path="pedidos/:id" element={<DetallePedidoAdminPage />} />
+                        <Route path="promociones" element={<PromocionesAdminPage />} />
                         <Route path="clientes" element={<ClientesPage />} />
                         <Route path="usuarios" element={<UsuariosPage />} />
                         <Route path="reportes" element={<ReportesPage />} />
@@ -105,9 +113,10 @@ const AppRouter = () => {
                         <Route index element={<VendedorDashboard />} />
                         <Route path="nueva-venta" element={<NuevaVentaPage />} />
                         <Route path="historial" element={<HistorialVentasPage />} />
-                        <Route path="ventas/:id" element={<DetalleVentaPage />} />
+                        <Route path="ventas/:id" element={<DetalleVentaVendedorPage />} />
                         <Route path="inventario" element={<InventarioVendedorPage />} />
                         <Route path="clientes" element={<ClientesVendedorPage />} />
+                        <Route path="perfil" element={<PerfilVendedorPage />} />
                     </Route>
 
                     <Route path="*" element={<Navigate to="/" replace />} />

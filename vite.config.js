@@ -18,11 +18,22 @@ export default defineConfig({
         sourcemap: false,
         rollupOptions: {
             output: {
-                manualChunks: {
-                    react: ["react", "react-dom"],
-                    router: ["react-router-dom"],
-                    icons: ["react-icons"],
-                    axios: ["axios"],
+                manualChunks(id) {
+                    if (id.includes("node_modules")) {
+                        if (id.includes("react-router-dom")) {
+                            return "router";
+                        }
+                        if (id.includes("react-icons")) {
+                            return "icons";
+                        }
+                        if (id.includes("react") || id.includes("react-dom")) {
+                            return "react";
+                        }
+                        if (id.includes("axios")) {
+                            return "axios";
+                        }
+                        return "vendor";
+                    }
                 },
             },
         },
