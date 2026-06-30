@@ -151,7 +151,7 @@ export const SidebarAdmin = ({ cerrar = null }) => {
                         <RiStoreLine size={15} className="text-white" />
                     </div>
                     <div>
-                        <p className="text-[13px] font-bold text-white tracking-tight leading-none">Tienda</p>
+                        <p className="text-[13px] font-bold text-white tracking-tight leading-none">MODA JELÚ</p>
                         <p className="text-[10px] text-neutral-500 leading-none mt-0.5">Panel Admin</p>
                     </div>
                 </div>

@@ -28,7 +28,7 @@ export const Navbar = () => {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center gap-3">
                         <Link to="/" className="text-xl font-bold tracking-tight text-neutral-900">
-                            TIENDA
+                            MODA JELÚ
                         </Link>
                         {usuario?.rol === 'ADMIN' && (
                             <span className="hidden sm:flex items-center gap-1 px-2 py-0.5 bg-[#c4956a]/10 text-[#c4956a] text-[10px] font-bold uppercase tracking-wider rounded border border-[#c4956a]/20">

@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 export const Input = ({
     label,
     error,
@@ -8,9 +10,13 @@ export const Input = ({
     id,
     className = '',
     requerido = false,
+    maxLength,
     ...props
 }) => {
-    const inputId = id || `input-${Math.random().toString(36).slice(2, 7)}`
+    const generatedId = useId();
+    const inputId = id || `input-${generatedId.replace(/:/g, '')}`;
+    
+    const limit = type === 'tel' ? 9 : maxLength;
 
     return (
         <div className={`flex flex-col gap-1.5 ${className}`}>
@@ -29,6 +35,7 @@ export const Input = ({
                 <input
                     id={inputId}
                     type={type}
+                    maxLength={limit}
                     className={[
                         'w-full h-10 px-3 text-sm rounded border bg-white text-neutral-900 placeholder-neutral-400',
                         'focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 transition-colors',

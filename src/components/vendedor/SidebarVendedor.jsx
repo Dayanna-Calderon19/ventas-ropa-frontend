@@ -65,7 +65,7 @@ export const SidebarVendedor = ({ cerrar = null }) => {
     }
 
     const manejarNuevaVenta = () => {
-        navigate('/vendedor/venta')
+        navigate('/vendedor/nueva-venta')
         cerrar?.()
     }
 

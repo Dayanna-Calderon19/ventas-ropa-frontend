@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 export const Select = ({
     label,
     error,
@@ -9,7 +11,8 @@ export const Select = ({
     requerido = false,
     ...props
 }) => {
-    const selectId = id || `select-${Math.random().toString(36).slice(2, 7)}`
+    const generatedId = useId();
+    const selectId = id || `select-${generatedId.replace(/:/g, '')}`;
 
     return (
         <div className={`flex flex-col gap-1.5 ${className}`}>

@@ -51,9 +51,9 @@ export const TablaBase = ({ columnas = [], filas = [], cargando = false, accionF
                     </tr>
                 </thead>
                 <tbody>
-                    {filas.map((fila, i) => (
+                    {filas.map((fila) => (
                         <tr
-                            key={fila.id ?? i}
+                            key={fila.id}
                             onClick={accionFila ? () => accionFila(fila) : undefined}
                             className={`border-b border-neutral-100 last:border-0 ${accionFila ? 'cursor-pointer hover:bg-neutral-50' : ''} transition-colors`}
                         >
