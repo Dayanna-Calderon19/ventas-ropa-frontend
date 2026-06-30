@@ -5,6 +5,11 @@ export const obtenerResumenGeneral = async () => {
     return data.data;
 };
 
+export const obtenerResumenDetallado = async () => {
+    const { data } = await api.get("/reportes/resumen-detallado");
+    return data.data;
+};
+
 export const obtenerVentasPorPeriodo = async (filtros = {}) => {
     const { data } = await api.get("/reportes/ventas", { params: filtros });
     return data.data;

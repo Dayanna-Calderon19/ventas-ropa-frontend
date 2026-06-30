@@ -3,6 +3,7 @@ import { useFetch } from "./useFetch.js";
 import { useAsync } from "./useAsync.js";
 import {
     obtenerResumenGeneral,
+    obtenerResumenDetallado,
     obtenerVentasPorPeriodo,
     obtenerProductosMasVendidos,
     obtenerIngresosMensuales,
@@ -11,6 +12,10 @@ import {
 
 export const useResumenGeneral = () => {
     return useFetch(obtenerResumenGeneral, [], { datosIniciales: null });
+};
+
+export const useResumenDetallado = () => {
+    return useFetch(obtenerResumenDetallado, [], { datosIniciales: null });
 };
 
 export const useReporteInventario = () => {
@@ -45,7 +50,7 @@ export const useReportesDinamicos = () => {
 };
 
 export const useReportes = () => {
-    const { datos: resumen, cargando: cargandoResumen } = useResumenGeneral();
+    const { datos: resumen, cargando: cargandoResumen } = useResumenDetallado();
     
     const { datos: inventario, cargando: cargandoInventario } =
         useReporteInventario();
