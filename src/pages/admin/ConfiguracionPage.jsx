@@ -84,7 +84,18 @@ const ConfiguracionPage = () => {
                                     <Input label="Nombre completo" name="nombre" value={valores.nombre} onChange={manejarCambio} error={errores.nombre} requerido />
                                     <Input label="Correo electrónico" type="email" name="correo" value={valores.correo} onChange={manejarCambio} error={errores.correo} requerido />
                                 </div>
-                                <Input label="Teléfono" name="telefono" value={valores.telefono} onChange={manejarCambio} error={errores.telefono} />
+                                <Input 
+                                    label="Teléfono" 
+                                    name="telefono" 
+                                    type="tel"
+                                    maxLength={9}
+                                    value={valores.telefono} 
+                                    onChange={(e) => {
+                                        const soloNumeros = e.target.value.replace(/\D/g, '');
+                                        manejarCambio({ target: { name: 'telefono', value: soloNumeros } });
+                                    }} 
+                                    error={errores.telefono} 
+                                />
                                 <div className="flex justify-end pt-2">
                                     <Boton type="submit" variante="primario" cargando={enviando} icono={<RiSaveLine size={16} />}>
                                         Guardar Perfil
