@@ -12,10 +12,11 @@ import { Alerta } from '../../components/ui/Alerta.jsx'
 import { Modal } from '../../components/ui/Modal.jsx'
 import { cambiarContrasena } from '../../services/auth.service.js'
 
-const validarPerfil = ({ nombre, correo }) => {
+const validarPerfil = ({ nombre, correo, telefono }) => {
     const errores = {}
     if (!nombre?.trim()) errores.nombre = 'El nombre es requerido'
     if (!correo?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) errores.correo = 'Correo inválido'
+    if (telefono && !/^\d{0,9}$/.test(telefono)) errores.telefono = 'El teléfono debe ser numérico y tener máximo 9 dígitos'
     return errores
 }
 
@@ -83,7 +84,7 @@ const ConfiguracionPage = () => {
                                     <Input label="Nombre completo" name="nombre" value={valores.nombre} onChange={manejarCambio} error={errores.nombre} requerido />
                                     <Input label="Correo electrónico" type="email" name="correo" value={valores.correo} onChange={manejarCambio} error={errores.correo} requerido />
                                 </div>
-                                <Input label="Teléfono" name="telefono" value={valores.telefono} onChange={manejarCambio} />
+                                <Input label="Teléfono" name="telefono" value={valores.telefono} onChange={manejarCambio} error={errores.telefono} />
                                 <div className="flex justify-end pt-2">
                                     <Boton type="submit" variante="primario" cargando={enviando} icono={<RiSaveLine size={16} />}>
                                         Guardar Perfil
