@@ -26,7 +26,7 @@ const PanelError = ({ mensaje, onReintentar }) => (
 
 const InventarioVendedorPage = () => {
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
-    const { datos, meta, cargando, error, filtros, aplicarFiltros, irAPagina, cargar } = useVariantes()
+    const { datos, meta, cargando, error, filtros, aplicarFiltros, irAPagina, cargar } = useVariantes({}, { limite: 3 })
 
     useEffect(() => {
         aplicarFiltros({ busqueda: terminoRetrasado || undefined })

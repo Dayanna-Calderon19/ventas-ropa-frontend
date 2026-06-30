@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RiMapPinLine, RiShoppingBagLine } from 'react-icons/ri'
 import { useCarrito } from '../../hooks/useCarrito.js'
@@ -10,6 +11,7 @@ import { Boton } from '../../components/ui/Boton.jsx'
 import { Input } from '../../components/ui/Input.jsx'
 import { Alerta } from '../../components/ui/Alerta.jsx'
 import { EstadoVacio } from '../../components/ui/EstadoVacio.jsx'
+import { listarPromociones } from '../../services/promocion.service.js'
 
 const validarDireccion = ({ direccion, ciudad, distrito }) => {
     const errores = {}
@@ -23,12 +25,27 @@ const VALORES_INICIALES = { direccion: '', ciudad: '', distrito: '', referencia:
 
 const CheckoutPage = () => {
     const navigate = useNavigate()
-    const { items, subtotal, itemsParaPedido, limpiarCarrito } = useCarrito()
+    const { items, subtotal, descuento, promocion, itemsParaPedido, limpiarCarrito, aplicarPromocion } = useCarrito()
+    const [codigoPromo, setCodigoPromo] = useState('')
     const { crear, cargando, error } = useMutacionPedido()
-    const { exito } = useToast()
+    const { exito, error: mostrarError } = useToast()
 
     const { valores, errores, errorGlobal, manejarCambio, manejarEnvio } =
         useFormulario(VALORES_INICIALES, validarDireccion)
+
+    const manejarAplicarPromo = async () => {
+        try {
+            const promos = await listarPromociones({ codigo: codigoPromo, activo: 'true' })
+            if (promos.length > 0) {
+                aplicarPromocion(promos[0])
+                exito('Promoción aplicada')
+            } else {
+                mostrarError('Código no válido o no activo')
+            }
+        } catch (err) {
+            mostrarError('Error al validar código')
+        }
+    }
 
     if (!items.length) {
         return (
@@ -53,6 +70,7 @@ const CheckoutPage = () => {
             const direccionEnvio = `${datos.direccion}, ${datos.distrito}, ${datos.ciudad}${datos.referencia ? ` (Ref: ${datos.referencia})` : ''}`
             const pedido = await crear({
                 items: itemsParaPedido,
+                promocionId: promocion?.id,
                 direccionEnvio,
                 notas: datos.notas || undefined,
             })
@@ -152,7 +170,13 @@ const CheckoutPage = () => {
 
                 <div className="bg-white border border-neutral-200 rounded-lg p-5 h-fit sticky top-24">
                     <h2 className="text-sm font-semibold text-neutral-900 mb-4">Resumen</h2>
-                    <ResumenCarrito subtotal={subtotal} />
+                    
+                    <div className="flex gap-2 mb-4">
+                        <Input placeholder="Código promo" value={codigoPromo} onChange={(e) => setCodigoPromo(e.target.value)} />
+                        <Boton variante="secundario" onClick={manejarAplicarPromo}>Aplicar</Boton>
+                    </div>
+
+                    <ResumenCarrito subtotal={subtotal} descuento={descuento} />
                     <p className="text-xs text-neutral-400 mt-4 text-center">
                         El pago se realiza contra entrega
                     </p>

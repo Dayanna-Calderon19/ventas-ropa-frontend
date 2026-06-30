@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { RiMailLine, RiLockLine } from 'react-icons/ri'
+import { useState } from 'react'
+import { RiMailLine, RiLockLine, RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth.js'
 import { useFormulario } from '../../hooks/useFormulario.js'
 import { useToast } from '../../components/ui/Toast.jsx'
@@ -21,6 +22,7 @@ const LoginPage = () => {
     const { exito } = useToast()
     const navigate = useNavigate()
     const location = useLocation()
+    const [mostrarContrasena, setMostrarContrasena] = useState(false)
 
     const {
         valores,
@@ -35,9 +37,10 @@ const LoginPage = () => {
         e.preventDefault()
         await manejarEnvio(async (datos) => {
             const resultado = await login(datos)
-            exito(`Bienvenido, ${resultado.usuario.nombre}`)
+            const usuario = resultado.data.usuario
+            exito(`Bienvenido, ${usuario.nombre}`)
             const desde = location.state?.desde?.pathname
-            const destino = desde || REDIRECCION_POR_ROL[resultado.usuario.rol] || '/'
+            const destino = desde || REDIRECCION_POR_ROL[usuario.rol] || '/'
             navigate(destino, { replace: true })
         })
     }
@@ -69,12 +72,21 @@ const LoginPage = () => {
 
                 <Input
                     label="Contraseña"
-                    type="password"
+                    type={mostrarContrasena ? 'text' : 'password'}
                     name="contrasena"
                     value={valores.contrasena}
                     onChange={manejarCambio}
                     error={errores.contrasena}
                     icono={<RiLockLine size={16} />}
+                    iconoDerecha={
+                        <button
+                            type="button"
+                            onClick={() => setMostrarContrasena(!mostrarContrasena)}
+                            className="text-neutral-500 hover:text-neutral-700"
+                        >
+                            {mostrarContrasena ? <RiEyeOffLine size={16} /> : <RiEyeLine size={16} />}
+                        </button>
+                    }
                     placeholder="••••••••"
                     requerido
                     autoComplete="current-password"

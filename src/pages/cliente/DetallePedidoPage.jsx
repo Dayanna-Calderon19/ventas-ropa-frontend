@@ -67,7 +67,7 @@ const DetallePedidoPage = () => {
     const { id } = useParams()
     const navigate = useNavigate()
     const { exito } = useToast()
-    const modalCancelar = useModal()
+    const modalCancelar = useModal('cliente_pedido_cancelar')
 
     const { datos: pedido, cargando, error, cargar } = usePedido(id)
     const { cancelar, cargando: cancelando } = useMutacionPedido()

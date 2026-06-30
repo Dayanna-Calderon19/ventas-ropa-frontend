@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { RiEyeLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth.js'
 import { useVentas } from '../../hooks/useVentas.js'
 import { CabeceraSeccion } from '../../components/admin/CabeceraSeccion.jsx'
@@ -31,12 +32,20 @@ const HistorialVentasPage = () => {
             render: (v) => <span className="text-sm text-neutral-600">{v.items?.length ?? 0} items</span>,
         },
         {
-            clave: 'subtotal', titulo: 'Subtotal',
-            render: (v) => <span className="text-sm text-neutral-600">{formatearMoneda(v.subtotal)}</span>,
-        },
-        {
             clave: 'total', titulo: 'Total',
             render: (v) => <span className="font-semibold text-neutral-900">{formatearMoneda(v.total)}</span>,
+        },
+        {
+            clave: 'acciones', titulo: 'Acciones',
+            render: (v) => (
+                <button
+                    onClick={() => navigate(`/vendedor/ventas/${v.id}`)}
+                    className="p-1.5 rounded text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                    title="Ver detalle"
+                >
+                    <RiEyeLine size={16} />
+                </button>
+            ),
         },
     ]
 
@@ -62,7 +71,6 @@ const HistorialVentasPage = () => {
                     columnas={columnas}
                     filas={datos ?? []}
                     cargando={cargando}
-                    accionFila={(v) => navigate(`/vendedor/historial/${v.id}`)}
                 />
 
                 {meta && meta.totalPages > 1 && (

@@ -11,7 +11,7 @@ import { useModal } from '../../hooks/useModal.js'
 const CartPage = () => {
     const { items, subtotal, cantidadItems, limpiarCarrito } = useCarrito()
     const navigate = useNavigate()
-    const modalLimpiar = useModal()
+    const modalLimpiar = useModal('cliente_cart_limpiar')
 
     if (!items.length) {
         return (

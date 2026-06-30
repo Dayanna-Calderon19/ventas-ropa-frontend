@@ -8,7 +8,6 @@ import { Input } from '../../components/ui/Input.jsx'
 import { Boton } from '../../components/ui/Boton.jsx'
 import { Alerta } from '../../components/ui/Alerta.jsx'
 import { authService } from '../../services/index.js'
-import { validarCambioContrasena } from '../../utils/validaciones.js'
 
 const validarPerfil = ({ nombre }) => {
     const errores = {}

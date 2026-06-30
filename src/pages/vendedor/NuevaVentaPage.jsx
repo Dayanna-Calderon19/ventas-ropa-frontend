@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RiSearchLine, RiAddLine, RiDeleteBinLine, RiShoppingCartLine } from 'react-icons/ri'
 import { useMutacionVenta } from '../../hooks/useVentas.js'
@@ -7,12 +7,13 @@ import { useFetch } from '../../hooks/useFetch.js'
 import { useBusqueda } from '../../hooks/useBusqueda.js'
 import { Input } from '../../components/ui/Input.jsx'
 import { Boton } from '../../components/ui/Boton.jsx'
-import { Badge } from '../../components/ui/Badge.jsx'
 import { EstadoVacio } from '../../components/ui/EstadoVacio.jsx'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog.jsx'
 import { useModal } from '../../hooks/useModal.js'
 import { listarProductos } from '../../services/producto.service.js'
+import { listarClientes } from '../../services/cliente.service.js'
 import { formatearMoneda } from '../../utils/formato.js'
+import { Select } from '../../components/ui/Select.jsx'
 
 const BuscadorProductos = ({ onAgregarVariante }) => {
     const { termino, terminoRetrasado, manejarCambio } = useBusqueda(300)
@@ -24,7 +25,7 @@ const BuscadorProductos = ({ onAgregarVariante }) => {
         { ejecutarInmediatamente: !!terminoRetrasado, datosIniciales: null }
     )
 
-    const productos = datos ?? []
+    const productos = datos?.data ?? []
 
     return (
         <div className="flex flex-col gap-3">
@@ -109,9 +110,26 @@ const NuevaVentaPage = () => {
     const navigate = useNavigate()
     const { exito, error: toastError } = useToast()
     const { registrar, cargando } = useMutacionVenta()
-    const modalConfirm = useModal()
+    const modalConfirm = useModal('vendedor_venta_confirm')
 
     const [items, setItems] = useState([])
+    const [clienteId, setClienteId] = useState('')
+    const [clientes, setClientes] = useState([])
+
+    useEffect(() => {
+        const cargarClientes = async () => {
+            try {
+                const data = await listarClientes()
+                // Asumiendo que listarClientes devuelve un objeto con la lista en 'data' o similar
+                // Basado en el error, 'data' no es un array. Probemos accediendo a la propiedad que contenga el array.
+                const listaClientes = Array.isArray(data) ? data : (data.data || [])
+                setClientes(listaClientes.map(c => ({ valor: c.id, etiqueta: c.nombre })))
+            } catch (e) {
+                console.error("Error al cargar clientes", e)
+            }
+        }
+        cargarClientes()
+    }, [])
 
     const agregarVariante = useCallback((variante) => {
         setItems((prev) => {
@@ -140,7 +158,7 @@ const NuevaVentaPage = () => {
                 },
             ]
         })
-    }, [toastError])
+    }, [toastError]);
 
     const cambiarCantidad = (varianteId, cantidad) => {
         if (cantidad <= 0) {
@@ -168,10 +186,12 @@ const NuevaVentaPage = () => {
         try {
             const payload = {
                 items: items.map(({ varianteId, cantidad }) => ({ varianteId, cantidad })),
+                clienteId: clienteId || null,
             }
             const venta = await registrar(payload)
             exito('Venta registrada correctamente')
             setItems([])
+            setClienteId('')
             modalConfirm.cerrar()
             navigate(`/vendedor/historial/${venta.id}`)
         } catch {
@@ -185,6 +205,15 @@ const NuevaVentaPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                 <div className="lg:col-span-3 flex flex-col gap-5">
+                    <div className="bg-white border border-neutral-200 rounded-lg p-5">
+                        <h2 className="text-sm font-semibold text-neutral-900 mb-4">Cliente</h2>
+                        <Select
+                            placeholder="Seleccionar cliente"
+                            opciones={clientes}
+                            value={clienteId}
+                            onChange={(e) => setClienteId(e.target.value)}
+                        />
+                    </div>
                     <div className="bg-white border border-neutral-200 rounded-lg p-5">
                         <h2 className="text-sm font-semibold text-neutral-900 mb-4">Buscar productos</h2>
                         <BuscadorProductos onAgregarVariante={agregarVariante} />
