@@ -66,7 +66,7 @@ const FormAjuste = ({ variante, onGuardar, cargando, error }) => {
 
 const InventarioPage = () => {
     const { exito } = useToast()
-    const modalAjuste = useModal()
+    const modalAjuste = useModal('admin_inventario_ajuste')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, filtros, aplicarFiltros, irAPagina, recargar } = useVariantes()
     const { ajustar, cargando: ajustando, error } = useMutacionInventario()
@@ -106,7 +106,7 @@ const InventarioPage = () => {
         },
         { clave: 'activo', titulo: 'Estado', render: (v) => <Badge variante={v.activo ? 'exito' : 'error'}>{v.activo ? 'Activo' : 'Inactivo'}</Badge> },
         {
-            clave: 'acciones', titulo: '',
+            clave: 'acciones', titulo: 'Acciones',
             render: (v) => (
                 <button onClick={(e) => { e.stopPropagation(); modalAjuste.abrir(v) }} className="flex items-center gap-1 px-2.5 py-1.5 text-xs border border-neutral-300 rounded hover:border-neutral-900 transition-colors text-neutral-700">
                     <RiEditLine size={13} /> Ajustar
