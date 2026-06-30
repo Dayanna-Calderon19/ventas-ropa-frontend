@@ -43,6 +43,7 @@ const AdminDashboard = () => {
                 <TarjetaResumen
                     titulo="Usuarios activos"
                     valor={resumen?.usuarios?.total ?? 0}
+                    subtitulo={`${resumen?.usuarios?.total ?? 0} usuarios registrados`}
                     Icono={RiGroupLine}
                     color="tierra"
                     cargando={cargandoResumen}
@@ -50,6 +51,7 @@ const AdminDashboard = () => {
                 <TarjetaResumen
                     titulo="Pedidos pendientes"
                     valor={resumen?.pedidos?.pendientes ?? 0}
+                    subtitulo={`${resumen?.pedidos?.pendientes ?? 0} pedidos por procesar`}
                     Icono={RiFileListLine}
                     color={resumen?.pedidos?.pendientes > 0 ? 'naranja' : 'neutral'}
                     cargando={cargandoResumen}
