@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { RiMapPinLine, RiShoppingBagLine } from 'react-icons/ri'
+import { RiMapPinLine, RiShoppingBagLine, RiCouponLine } from 'react-icons/ri'
 import { useCarrito } from '../../hooks/useCarrito.js'
 import { useMutacionPedido } from '../../hooks/usePedidos.js'
 import { useFormulario } from '../../hooks/useFormulario.js'
@@ -25,24 +25,51 @@ const VALORES_INICIALES = { direccion: '', ciudad: '', distrito: '', referencia:
 
 const CheckoutPage = () => {
     const navigate = useNavigate()
-    const { items, subtotal, descuento, promocion, itemsParaPedido, limpiarCarrito, aplicarPromocion } = useCarrito()
+    const { items, subtotal, descuento, promocion, itemsParaPedido, limpiarCarrito, aplicarPromocion, quitarPromocion } = useCarrito()
     const [codigoPromo, setCodigoPromo] = useState('')
+    const [promosVigentes, setPromosVigentes] = useState([])
     const { crear, cargando, error } = useMutacionPedido()
     const { exito, error: mostrarError } = useToast()
 
     const { valores, errores, errorGlobal, manejarCambio, manejarEnvio } =
         useFormulario(VALORES_INICIALES, validarDireccion)
 
-    const manejarAplicarPromo = async () => {
+    useEffect(() => {
+        const fetchPromos = async () => {
+            const data = await listarPromociones({ activo: 'true' })
+            setPromosVigentes(data || [])
+        }
+        fetchPromos()
+    }, [])
+
+    const manejarAplicarPromo = async (promoSeleccionada) => {
         try {
-            const promos = await listarPromociones({ codigo: codigoPromo, activo: 'true' })
-            if (promos.length > 0) {
-                aplicarPromocion(promos[0])
+            // Si llega un objeto, se aplica directamente, si llega un codigo, se busca
+            let promoParaAplicar = promoSeleccionada;
+            
+            if (typeof promoSeleccionada === 'string') {
+                const promos = await listarPromociones({ codigo: promoSeleccionada, activo: 'true' })
+                if (promos && promos.length > 0) {
+                    promoParaAplicar = promos[0];
+                } else {
+                    mostrarError('Código no válido o no activo')
+                    return;
+                }
+            }
+            
+            if (promoParaAplicar) {
+                // Validación adicional: monto mínimo
+                if (promoParaAplicar.montoMinimo && subtotal < promoParaAplicar.montoMinimo) {
+                    mostrarError(`Esta promoción requiere un mínimo de compra de ${promoParaAplicar.montoMinimo}`)
+                    return;
+                }
+                
+                aplicarPromocion(promoParaAplicar)
                 exito('Promoción aplicada')
-            } else {
-                mostrarError('Código no válido o no activo')
+                setCodigoPromo('')
             }
         } catch (err) {
+            console.error(err);
             mostrarError('Error al validar código')
         }
     }
@@ -171,12 +198,14 @@ const CheckoutPage = () => {
                 <div className="bg-white border border-neutral-200 rounded-lg p-5 h-fit sticky top-24">
                     <h2 className="text-sm font-semibold text-neutral-900 mb-4">Resumen</h2>
                     
-                    <div className="flex gap-2 mb-4">
-                        <Input placeholder="Código promo" value={codigoPromo} onChange={(e) => setCodigoPromo(e.target.value)} />
-                        <Boton variante="secundario" onClick={manejarAplicarPromo}>Aplicar</Boton>
-                    </div>
-
-                    <ResumenCarrito subtotal={subtotal} descuento={descuento} />
+                    <ResumenCarrito 
+                        subtotal={subtotal} 
+                        descuento={descuento} 
+                        promocion={promocion}
+                        promosVigentes={promosVigentes}
+                        onAplicarPromo={manejarAplicarPromo}
+                        onQuitarPromo={quitarPromocion}
+                    />
                     <p className="text-xs text-neutral-400 mt-4 text-center">
                         El pago se realiza contra entrega
                     </p>

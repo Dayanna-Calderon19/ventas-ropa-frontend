@@ -1,4 +1,4 @@
-import { createContext, useReducer, useCallback, useMemo } from 'react'
+import { createContext, useReducer, useCallback, useMemo, useEffect } from 'react'
 
 export const CarritoContext = createContext(null)
 
@@ -9,10 +9,14 @@ const ACCIONES = {
     LIMPIAR: 'LIMPIAR',
     APLICAR_PROMOCION: 'APLICAR_PROMOCION',
     QUITAR_PROMOCION: 'QUITAR_PROMOCION',
+    CARGAR_ESTADO: 'CARGAR_ESTADO',
 }
 
 const reducerCarrito = (estado, accion) => {
     switch (accion.type) {
+        case ACCIONES.CARGAR_ESTADO:
+            return accion.payload;
+
         case ACCIONES.AGREGAR: {
             const { variante, cantidad = 1 } = accion.payload
             const existente = estado.items.find((i) => i.varianteId === variante.id)
@@ -88,7 +92,16 @@ const reducerCarrito = (estado, accion) => {
 const estadoInicial = { items: [], promocion: null }
 
 export const CarritoProvider = ({ children }) => {
-    const [estado, dispatch] = useReducer(reducerCarrito, estadoInicial)
+    // Cargar estado inicial desde localStorage
+    const [estado, dispatch] = useReducer(reducerCarrito, estadoInicial, (inicial) => {
+        const guardado = localStorage.getItem('carrito');
+        return guardado ? JSON.parse(guardado) : inicial;
+    })
+
+    // Guardar en localStorage cada vez que el estado cambie
+    useEffect(() => {
+        localStorage.setItem('carrito', JSON.stringify(estado));
+    }, [estado]);
 
     const agregarItem = useCallback((variante, cantidad = 1) => {
         dispatch({ type: ACCIONES.AGREGAR, payload: { variante, cantidad } })
@@ -125,10 +138,13 @@ export const CarritoProvider = ({ children }) => {
         
         let descuento = 0
         if (estado.promocion) {
-            if (estado.promocion.tipoDescuento === 'PORCENTAJE') {
-                descuento = (subtotal * estado.promocion.valorDescuento) / 100
-            } else {
-                descuento = Math.min(estado.promocion.valorDescuento, subtotal)
+            // Validar que la promoción siga siendo aplicable (ej. monto mínimo)
+            if (!estado.promocion.montoMinimo || subtotal >= estado.promocion.montoMinimo) {
+                if (estado.promocion.tipoDescuento === 'PORCENTAJE') {
+                    descuento = (subtotal * estado.promocion.valorDescuento) / 100
+                } else {
+                    descuento = Math.min(estado.promocion.valorDescuento, subtotal)
+                }
             }
         }
         
