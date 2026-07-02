@@ -30,7 +30,7 @@ const BannerHero = () => (
           Ver catálogo
         </Boton>
         <Link to="/registro">
-          <Boton variante="secundario" tamanio="lg" className="bg-transparent text-white border-neutral-600 hover:bg-neutral-800 hover:border-neutral-400">
+          <Boton variante="secundario" tamanio="lg" className="bg-transparent text-black border-neutral-600 hover:bg-neutral-800 hover:border-neutral-400 hover:text-white">
             Crear cuenta
           </Boton>
         </Link>
