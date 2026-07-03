@@ -32,10 +32,24 @@ export { usePedidos, usePedido, useMutacionPedido } from "./usePedidos.js";
 
 export {
     useUsuarios,
+    useUsuariosGestion,
     useUsuario,
     useHistorialPedidos,
     useMutacionUsuario,
 } from "./useUsuarios.js";
+
+export {
+    useCategoriasPaginadas,
+    useCategoria,
+    useMutacionCategoria,
+} from "./useCategorias.js";
+
+export {
+    usePromociones,
+    usePromocion,
+    useMutacionPromocion,
+} from "./usePromociones.js";
+
 
 export {
     useResumenGeneral,

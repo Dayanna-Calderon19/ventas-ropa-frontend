@@ -1,6 +1,6 @@
 import { createContext, useState, useCallback, useEffect } from 'react'
-import { iniciarSesion, registrarse, cerrarSesion, obtenerPerfil } from '../services/auth.service.js'
-import { obtenerUsuario, haySesionActiva } from '../utils/almacenamiento.js'
+import { limpiarSesion, obtenerUsuario, haySesionActiva, guardarToken, guardarUsuario } from '../utils/almacenamiento.js'
+import { iniciarSesion, registrarse, obtenerPerfil } from '../services/auth.service.js'
 import { extraerMensajeError } from '../utils/manejarError.js'
 
 export const AuthContext = createContext(null)
@@ -19,7 +19,9 @@ export const AuthProvider = ({ children }) => {
             try {
                 const perfil = await obtenerPerfil()
                 setUsuario(perfil)
+                guardarUsuario(perfil)
             } catch {
+                limpiarSesion()
                 setUsuario(null)
             } finally {
                 setCargandoSesion(false)
@@ -32,14 +34,20 @@ export const AuthProvider = ({ children }) => {
         setError(null)
         try {
             const resultado = await iniciarSesion(credenciales)
-            setUsuario(resultado.usuario)
+            // The API returns { ok, message, data: { usuario, token } }
+            const { usuario, token } = resultado.data
+
+            guardarToken(token)
+            guardarUsuario(usuario)
+            setUsuario(usuario)
+
             return resultado
         } catch (err) {
             setError(extraerMensajeError(err))
             throw err
         }
     }, [])
-
+// ... rest of the file
     const registro = useCallback(async (datos) => {
         setError(null)
         try {
@@ -53,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     const logout = useCallback(() => {
-        cerrarSesion()
+        limpiarSesion()
         setUsuario(null)
         setError(null)
     }, [])

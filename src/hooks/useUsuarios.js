@@ -6,13 +6,22 @@ import {
     listarUsuarios,
     obtenerUsuario,
     crearUsuario,
+    crearCliente,
     actualizarPerfil,
     obtenerHistorialPedidos,
     toggleActivoUsuario,
+    listarUsuariosGestion,
+    crearUsuarioGestion,
+    actualizarUsuarioGestion,
+    toggleActivoUsuarioGestion,
 } from "../services/usuario.service.js";
 
 export const useUsuarios = (filtrosIniciales = {}) => {
     return usePaginacion(listarUsuarios, filtrosIniciales);
+};
+
+export const useUsuariosGestion = (filtrosIniciales = {}) => {
+    return usePaginacion(listarUsuariosGestion, filtrosIniciales);
 };
 
 export const useUsuario = (id) => {
@@ -33,6 +42,11 @@ export const useMutacionUsuario = () => {
         [ejecutar],
     );
 
+    const crearClienteVendedor = useCallback(
+    (payload) => ejecutar(crearCliente(payload)),
+    [ejecutar],
+    );
+
     const actualizarMiPerfil = useCallback(
         (payload) => ejecutar(actualizarPerfil(payload)),
         [ejecutar],
@@ -43,5 +57,31 @@ export const useMutacionUsuario = () => {
         [ejecutar],
     );
 
-    return { cargando, error, crear, actualizarMiPerfil, toggleActivo };
+    const crearGestion = useCallback(
+        (payload) => ejecutar(crearUsuarioGestion(payload)),
+        [ejecutar],
+    );
+
+    const actualizarGestion = useCallback(
+        (id, payload) => ejecutar(actualizarUsuarioGestion(id, payload)),
+        [ejecutar],
+    );
+
+    const toggleActivoGestion = useCallback(
+        (id) => ejecutar(toggleActivoUsuarioGestion(id)),
+        [ejecutar],
+    );
+
+    return {
+        cargando,
+        error,
+        crear,
+        crearClienteVendedor,
+        actualizarMiPerfil,
+        toggleActivo,
+        crearGestion,
+        actualizarGestion,
+        toggleActivoGestion,
+    };
 };
+

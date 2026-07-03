@@ -1,4 +1,4 @@
-import { createContext, useReducer, useCallback, useMemo } from 'react'
+import { createContext, useReducer, useCallback, useMemo, useEffect } from 'react'
 
 export const CarritoContext = createContext(null)
 
@@ -7,10 +7,16 @@ const ACCIONES = {
     QUITAR: 'QUITAR',
     CAMBIAR_CANTIDAD: 'CAMBIAR_CANTIDAD',
     LIMPIAR: 'LIMPIAR',
+    APLICAR_PROMOCION: 'APLICAR_PROMOCION',
+    QUITAR_PROMOCION: 'QUITAR_PROMOCION',
+    CARGAR_ESTADO: 'CARGAR_ESTADO',
 }
 
 const reducerCarrito = (estado, accion) => {
     switch (accion.type) {
+        case ACCIONES.CARGAR_ESTADO:
+            return accion.payload;
+
         case ACCIONES.AGREGAR: {
             const { variante, cantidad = 1 } = accion.payload
             const existente = estado.items.find((i) => i.varianteId === variante.id)
@@ -70,17 +76,32 @@ const reducerCarrito = (estado, accion) => {
         }
 
         case ACCIONES.LIMPIAR:
-            return { items: [] }
+            return { items: [], promocion: null }
+
+        case ACCIONES.APLICAR_PROMOCION:
+            return { ...estado, promocion: accion.payload }
+
+        case ACCIONES.QUITAR_PROMOCION:
+            return { ...estado, promocion: null }
 
         default:
             return estado
     }
 }
 
-const estadoInicial = { items: [] }
+const estadoInicial = { items: [], promocion: null }
 
 export const CarritoProvider = ({ children }) => {
-    const [estado, dispatch] = useReducer(reducerCarrito, estadoInicial)
+    // Cargar estado inicial desde localStorage
+    const [estado, dispatch] = useReducer(reducerCarrito, estadoInicial, (inicial) => {
+        const guardado = localStorage.getItem('carrito');
+        return guardado ? JSON.parse(guardado) : inicial;
+    })
+
+    // Guardar en localStorage cada vez que el estado cambie
+    useEffect(() => {
+        localStorage.setItem('carrito', JSON.stringify(estado));
+    }, [estado]);
 
     const agregarItem = useCallback((variante, cantidad = 1) => {
         dispatch({ type: ACCIONES.AGREGAR, payload: { variante, cantidad } })
@@ -98,6 +119,14 @@ export const CarritoProvider = ({ children }) => {
         dispatch({ type: ACCIONES.LIMPIAR })
     }, [])
 
+    const aplicarPromocion = useCallback((promocion) => {
+        dispatch({ type: ACCIONES.APLICAR_PROMOCION, payload: promocion })
+    }, [])
+
+    const quitarPromocion = useCallback(() => {
+        dispatch({ type: ACCIONES.QUITAR_PROMOCION })
+    }, [])
+
     const estaEnCarrito = useCallback(
         (varianteId) => estado.items.some((i) => i.varianteId === varianteId),
         [estado.items]
@@ -106,12 +135,27 @@ export const CarritoProvider = ({ children }) => {
     const totales = useMemo(() => {
         const subtotal = estado.items.reduce((acc, i) => acc + i.precio * i.cantidad, 0)
         const cantidadItems = estado.items.reduce((acc, i) => acc + i.cantidad, 0)
+        
+        let descuento = 0
+        if (estado.promocion) {
+            // Validar que la promoción siga siendo aplicable (ej. monto mínimo)
+            if (!estado.promocion.montoMinimo || subtotal >= estado.promocion.montoMinimo) {
+                if (estado.promocion.tipoDescuento === 'PORCENTAJE') {
+                    descuento = (subtotal * estado.promocion.valorDescuento) / 100
+                } else {
+                    descuento = Math.min(estado.promocion.valorDescuento, subtotal)
+                }
+            }
+        }
+        
         return {
             subtotal: parseFloat(subtotal.toFixed(2)),
+            descuento: parseFloat(descuento.toFixed(2)),
+            promocion: estado.promocion,
             cantidadItems,
             cantidadLineas: estado.items.length,
         }
-    }, [estado.items])
+    }, [estado.items, estado.promocion])
 
     const itemsParaPedido = useMemo(
         () => estado.items.map((i) => ({ varianteId: i.varianteId, cantidad: i.cantidad })),
@@ -128,6 +172,8 @@ export const CarritoProvider = ({ children }) => {
                 quitarItem,
                 cambiarCantidad,
                 limpiarCarrito,
+                aplicarPromocion,
+                quitarPromocion,
                 estaEnCarrito,
             }}
         >
