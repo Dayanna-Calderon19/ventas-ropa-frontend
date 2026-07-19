@@ -7,6 +7,8 @@ import { TablaBase } from '../../components/admin/TablaBase.jsx'
 import { Input } from '../../components/ui/Input.jsx'
 import { Badge } from '../../components/ui/Badge.jsx'
 import { Modal } from '../../components/ui/Modal.jsx'
+import { Boton } from '../../components/ui/Boton.jsx'
+import { useToast } from '../../components/ui/Toast.jsx'
 import { useModal } from '../../hooks/useModal.js'
 import { useBusqueda } from '../../hooks/useBusqueda.js'
 import { Paginacion } from '../../components/ui/Paginacion.jsx'
@@ -82,11 +84,70 @@ const DetalleCliente = ({ clienteId }) => {
     )
 }
 
+const FormCliente = ({ inicial, onGuardar, cargando, error }) => {
+    const [nombre, setNombre] = useState('')
+    const [correo, setCorreo] = useState('')
+    const [telefono, setTelefono] = useState('')
+    const [errores, setErrores] = useState({})
+
+    useEffect(() => {
+        if (inicial) {
+            setNombre(inicial.nombre || '')
+            setCorreo(inicial.correo || '')
+            setTelefono(inicial.telefono || '')
+        }
+    }, [inicial])
+
+    const validar = () => {
+        const err = {}
+        if (!nombre.trim()) err.nombre = 'El nombre es requerido'
+        if (!correo.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) err.correo = 'Correo inválido'
+        return err
+    }
+
+    const manejarSubmit = (e) => {
+        e.preventDefault()
+        const err = validar()
+        if (Object.keys(err).length > 0) {
+            setErrores(err)
+            return
+        }
+        setErrores({})
+        onGuardar({ nombre, correo, telefono, rol: 'CLIENTE' })
+    }
+
+    return (
+        <form onSubmit={manejarSubmit} className="flex flex-col gap-4">
+            {error && <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded text-xs">{error}</div>}
+            <Input label="Nombre completo" value={nombre} onChange={e => setNombre(e.target.value)} error={errores.nombre} requerido />
+            <Input label="Correo electrónico" type="email" value={correo} onChange={e => setCorreo(e.target.value)} error={errores.correo} requerido />
+            <Input
+                label="Teléfono"
+                type="tel"
+                maxLength={9}
+                value={telefono}
+                onChange={(e) => {
+                    const soloNumeros = e.target.value.replace(/\D/g, '');
+                    setTelefono(soloNumeros);
+                }}
+            />
+            <div className="flex justify-end pt-2">
+                <Boton type="submit" variante="primario" cargando={cargando}>
+                    Guardar cambios
+                </Boton>
+            </div>
+        </form>
+    )
+}
+
 const ClientesPage = () => {
+    const { exito } = useToast()
     const modalDetalle = useModal('admin_cliente_detalle')
+    const modalEditar = useModal('admin_cliente_editar')
     const { termino, terminoRetrasado, manejarCambio: manejarBusqueda } = useBusqueda()
     const { datos, meta, cargando, aplicarFiltros, irAPagina, recargar } = useUsuarios({ rol: 'CLIENTE' })
-    const { toggleActivo, cargando: mutando } = useMutacionUsuario()
+    const { toggleActivo, actualizarGestion, cargando: mutando } = useMutacionUsuario()
+    const [errorEdicion, setErrorEdicion] = useState(null)
 
     useEffect(() => {
         aplicarFiltros({ busqueda: terminoRetrasado || undefined })
@@ -95,6 +156,18 @@ const ClientesPage = () => {
     const manejarToggleActivo = async (id) => {
         await toggleActivo(id)
         recargar()
+    }
+
+    const manejarGuardarEdicion = async (datosEdicion) => {
+        try {
+            setErrorEdicion(null)
+            await actualizarGestion(modalEditar.datos.id, datosEdicion)
+            exito('Cliente actualizado correctamente')
+            modalEditar.cerrar()
+            recargar()
+        } catch (err) {
+            setErrorEdicion(err.response?.data?.message || 'Error al actualizar el cliente')
+        }
     }
 
     const columnas = [
@@ -142,7 +215,7 @@ const ClientesPage = () => {
                         <RiEyeLine size={16} />
                     </button>
                     <button
-                        onClick={() => {/* Implementar lógica de editar */}}
+                        onClick={() => modalEditar.abrir(c)}
                         className="p-1.5 rounded text-neutral-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         title="Editar"
                     >
@@ -196,6 +269,20 @@ const ClientesPage = () => {
                 tamanio="sm"
             >
                 <DetalleCliente clienteId={modalDetalle.datos} />
+            </Modal>
+
+            <Modal
+                abierto={modalEditar.abierto}
+                cerrar={modalEditar.cerrar}
+                titulo="Editar Cliente"
+                tamanio="sm"
+            >
+                <FormCliente
+                    inicial={modalEditar.datos}
+                    onGuardar={manejarGuardarEdicion}
+                    cargando={mutando}
+                    error={errorEdicion}
+                />
             </Modal>
         </div>
     )

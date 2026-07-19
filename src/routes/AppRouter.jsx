@@ -13,6 +13,7 @@ const HomePage = lazy(() => import('../pages/public/HomePage.jsx'))
 const CatalogoPage = lazy(() => import('../pages/public/CatalogoPage.jsx'))
 const ProductoDetallePage = lazy(() => import('../pages/public/ProductoDetallePage.jsx'))
 const PromocionesPublicasPage = lazy(() => import('../pages/public/PromocionesPage.jsx'))
+const LibroReclamacionesPage = lazy(() => import('../pages/public/LibroReclamacionesPage.jsx'))
 
 const LoginPage = lazy(() => import('../pages/auth/LoginPage.jsx'))
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage.jsx'))
@@ -34,6 +35,7 @@ const ClientesPage = lazy(() => import('../pages/admin/ClientesPage.jsx'))
 const UsuariosPage = lazy(() => import('../pages/admin/UsuariosPage.jsx'))
 const ReportesPage = lazy(() => import('../pages/admin/ReportesPage.jsx'))
 const ConfiguracionPage = lazy(() => import('../pages/admin/ConfiguracionPage.jsx'))
+const ReclamacionesAdminPage = lazy(() => import('../pages/admin/ReclamacionesPage.jsx'))
 
 const DetalleVentaAdminPage = lazy(() => import('../pages/admin/DetalleVentaPage.jsx'))
 const DetallePedidoAdminPage = lazy(() => import('../pages/admin/DetallePedidoPage.jsx'))
@@ -57,6 +59,7 @@ const AppRouter = () => {
                         <Route path="catalogo" element={<CatalogoPage />} />
                         <Route path="producto/:id" element={<ProductoDetallePage />} />
                         <Route path="promociones" element={<PromocionesPublicasPage />} />
+                        <Route path="libro-reclamaciones" element={<LibroReclamacionesPage />} />
                     </Route>
 
                     <Route element={<AuthLayout />}>
@@ -98,6 +101,7 @@ const AppRouter = () => {
                         <Route path="promociones" element={<PromocionesAdminPage />} />
                         <Route path="clientes" element={<ClientesPage />} />
                         <Route path="usuarios" element={<UsuariosPage />} />
+                        <Route path="reclamaciones" element={<ReclamacionesAdminPage />} />
                         <Route path="reportes" element={<ReportesPage />} />
                         <Route path="configuracion" element={<ConfiguracionPage />} />
                     </Route>

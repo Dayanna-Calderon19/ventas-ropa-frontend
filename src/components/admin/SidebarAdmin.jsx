@@ -17,6 +17,7 @@ import {
     RiArrowDownSLine,
     RiAlertLine,
     RiShieldUserLine,
+    RiFileTextLine,
 } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth.js'
 import { useAlertas } from '../../context/AlertasContext.jsx'
@@ -55,6 +56,7 @@ const GRUPOS = [
         items: [
             { a: '/admin/clientes', etiqueta: 'Clientes', Icono: RiGroupLine },
             { a: '/admin/usuarios', etiqueta: 'Usuarios', Icono: RiShieldUserLine },
+            { a: '/admin/reclamaciones', etiqueta: 'Reclamaciones', Icono: RiFileTextLine },
         ],
     },
     {

@@ -20,15 +20,16 @@ const BannerHero = () => (
         Encuentra prendas únicas para cada ocasión. Envíos a todo el Perú.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 mt-2">
-        <Boton
-          variante="tierra"
-          tamanio="lg"
-          icono={<RiArrowRightLine size={18} />}
-          iconoDerecha
-          onClick={() => (window.location.href = '/catalogo')}
-        >
-          Ver catálogo
-        </Boton>
+        <Link to="/catalogo">
+          <Boton
+            variante="tierra"
+            tamanio="lg"
+            icono={<RiArrowRightLine size={18} />}
+            iconoDerecha
+          >
+            Ver catálogo
+          </Boton>
+        </Link>
         <Link to="/registro">
           <Boton variante="secundario" tamanio="lg" className="bg-transparent text-black border-neutral-600 hover:bg-neutral-800 hover:border-neutral-400 hover:text-white">
             Crear cuenta
