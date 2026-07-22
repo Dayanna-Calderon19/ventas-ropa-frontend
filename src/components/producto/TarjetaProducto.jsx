@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
-import { RiShoppingBagLine } from 'react-icons/ri'
+import { RiShoppingBagLine, RiHeartLine, RiHeartFill } from 'react-icons/ri'
 import { formatearMoneda } from '../../utils/formato.js'
 import { STOCK_MINIMO_ALERTA } from '../../utils/constantes.js'
+import { useFavoritos } from '../../hooks/useFavoritos.js'
 
 export const TarjetaProducto = ({ producto }) => {
+    const { estaEnFavoritos, alternarFavorito } = useFavoritos()
+    const esFavorito = estaEnFavoritos(producto.id)
+
     const precioMinimo = producto.variantes?.length
         ? Math.min(...producto.variantes.map((v) => v.precio))
         : producto.precioBase
@@ -17,6 +21,12 @@ export const TarjetaProducto = ({ producto }) => {
         producto.imagenes?.[0]?.url ||
         producto.imagenUrl ||
         null
+
+    const manejarFavorito = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        alternarFavorito(producto)
+    }
 
     return (
         <Link
@@ -36,6 +46,14 @@ export const TarjetaProducto = ({ producto }) => {
                         <RiShoppingBagLine size={40} className="text-neutral-300" />
                     </div>
                 )}
+
+                <button
+                    onClick={manejarFavorito}
+                    aria-label={esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-neutral-500 hover:text-[#c4956a] transition-colors shadow-sm"
+                >
+                    {esFavorito ? <RiHeartFill size={16} className="text-[#c4956a]" /> : <RiHeartLine size={16} />}
+                </button>
 
                 {producto.destacado && !sinStock && (
                     <span className="absolute top-2 left-2 bg-neutral-900 text-white text-[10px] font-semibold px-2 py-0.5 rounded">

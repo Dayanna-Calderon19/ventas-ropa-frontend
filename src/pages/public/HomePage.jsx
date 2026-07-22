@@ -8,15 +8,15 @@ import { listarProductos } from '../../services/producto.service.js'
 import { listarCategorias } from '../../services/categoria.service.js'
 
 const BannerHero = () => (
-  <section className="bg-neutral-900 text-white">
+  <section className="bg-[#3c2a1e] text-white">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-28 flex flex-col items-center text-center gap-6">
-      <span className="text-xs font-semibold tracking-[0.2em] uppercase text-neutral-400">
+      <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#cbb59e]">
         Nueva colección
       </span>
       <h1 className="text-4xl md:text-6xl font-bold leading-tight max-w-2xl">
         Moda que define tu estilo
       </h1>
-      <p className="text-neutral-400 text-base md:text-lg max-w-md">
+      <p className="text-[#cbb59e] text-base md:text-lg max-w-md">
         Encuentra prendas únicas para cada ocasión. Envíos a todo el Perú.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 mt-2">
@@ -31,7 +31,7 @@ const BannerHero = () => (
           </Boton>
         </Link>
         <Link to="/registro">
-          <Boton variante="secundario" tamanio="lg" className="bg-transparent text-black border-neutral-600 hover:bg-neutral-800 hover:border-neutral-400 hover:text-white">
+          <Boton variante="secundario" tamanio="lg" className="bg-transparent text-white border-white/30 hover:bg-white/10 hover:border-white/60">
             Crear cuenta
           </Boton>
         </Link>
@@ -63,7 +63,7 @@ const SeccionCategorias = ({ categorias, cargando }) => {
           <Link
             key={cat.id}
             to={`/catalogo?categoriaId=${cat.id}`}
-            className="flex flex-col items-center justify-center gap-2 h-24 bg-white border border-neutral-200 rounded-lg hover:border-neutral-900 hover:shadow-sm transition-all text-sm font-medium text-neutral-700 hover:text-neutral-900"
+            className="flex flex-col items-center justify-center gap-2 h-24 bg-white border border-neutral-200 rounded-lg hover:border-[#c4956a] hover:shadow-sm transition-all text-sm font-medium text-neutral-700 hover:text-neutral-900"
           >
             {cat.imagenUrl && (
               <img src={cat.imagenUrl} alt={cat.nombre} className="w-8 h-8 object-cover rounded" />

@@ -1,25 +1,51 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-    RiFileTextLine,
+    RiBookOpenLine,
     RiPhoneLine,
     RiMailLine,
     RiMapPinLine,
     RiTimeLine,
     RiShieldCheckLine,
     RiTruckLine,
-    RiQuestionLine
+    RiQuestionLine,
+    RiCheckLine,
 } from 'react-icons/ri'
+import {
+    FaInstagram,
+    FaFacebookF,
+    FaTiktok,
+    FaWhatsapp,
+    FaCcVisa,
+    FaCcMastercard,
+    FaCcAmex,
+} from 'react-icons/fa'
 import { useAuth } from '../../hooks/useAuth.js'
 import { Modal } from '../ui/Modal.jsx'
 import { Input } from '../ui/Input.jsx'
 import { Boton } from '../ui/Boton.jsx'
+
+const REDES_SOCIALES = [
+    { nombre: 'Instagram', href: '#', Icono: FaInstagram },
+    { nombre: 'Facebook', href: '#', Icono: FaFacebookF },
+    { nombre: 'TikTok', href: '#', Icono: FaTiktok },
+    { nombre: 'WhatsApp', href: 'https://wa.me/51987654321', Icono: FaWhatsapp },
+]
 
 export const Footer = () => {
     const { usuario } = useAuth()
     const [modalTipo, setModalTipo] = useState(null) // 'contacto' | 'devoluciones' | 'seguimiento' | null
     const [idPedidoSeguimiento, setIdPedidoSeguimiento] = useState('')
     const [resultadoSeguimiento, setResultadoSeguimiento] = useState(null)
+    const [correoNewsletter, setCorreoNewsletter] = useState('')
+    const [suscrito, setSuscrito] = useState(false)
+
+    const manejarSuscripcion = (e) => {
+        e.preventDefault()
+        if (!correoNewsletter.trim()) return
+        setSuscrito(true)
+        setCorreoNewsletter('')
+    }
 
     const cerrarModal = () => {
         setModalTipo(null)
@@ -46,14 +72,54 @@ export const Footer = () => {
     }
 
     return (
-        <footer className="bg-neutral-900 text-neutral-400 mt-auto">
+        <footer className="bg-[#3c2a1e] text-[#cbb59e] mt-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+                <div className="border-b border-white/10 pb-8 mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <p className="text-white font-bold text-lg">Únete a nuestra lista</p>
+                        <p className="text-sm mt-1">Recibe ofertas exclusivas y novedades de colección en tu correo.</p>
+                    </div>
+                    {suscrito ? (
+                        <p className="text-sm text-[#c4956a] font-semibold flex items-center gap-2">
+                            <RiCheckLine size={18} />
+                            ¡Gracias por suscribirte!
+                        </p>
+                    ) : (
+                        <form onSubmit={manejarSuscripcion} className="flex gap-2 w-full sm:w-auto">
+                            <Input
+                                type="email"
+                                placeholder="tu@correo.com"
+                                value={correoNewsletter}
+                                onChange={(e) => setCorreoNewsletter(e.target.value)}
+                                className="sm:w-64"
+                                requerido
+                            />
+                            <Boton type="submit" variante="tierra" className="h-10 shrink-0">
+                                Suscribirme
+                            </Boton>
+                        </form>
+                    )}
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
                     <div>
                         <p className="text-white font-bold text-lg mb-3">TIENDA</p>
                         <p className="text-sm leading-relaxed">
                             Moda para todas las ocasiones. Envíos a todo el Perú.
                         </p>
+                        <div className="flex items-center gap-3 mt-4">
+                            {REDES_SOCIALES.map(({ nombre, href, Icono }) => (
+                                <a
+                                    key={nombre}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={nombre}
+                                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c4956a] text-white flex items-center justify-center transition-colors"
+                                >
+                                    <Icono size={15} />
+                                </a>
+                            ))}
+                        </div>
                     </div>
                     <div>
                         <p className="text-white text-sm font-semibold mb-3">Navegación</p>
@@ -90,20 +156,36 @@ export const Footer = () => {
                                     Seguimiento de pedido
                                 </button>
                             </li>
-                            <li className="pt-2 border-t border-neutral-800">
+                            <li className="pt-2 border-t border-white/10">
                                 <Link
                                     to="/libro-reclamaciones"
-                                    className="hover:text-white transition-colors flex items-center gap-1.5 text-[#c4956a]"
+                                    className="hover:text-white transition-colors flex items-center gap-2 text-[#c4956a] font-semibold"
                                 >
-                                    <RiFileTextLine size={16} />
+                                    <RiBookOpenLine size={20} />
                                     Libro de Reclamaciones
                                 </Link>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div className="border-t border-neutral-800 pt-6 text-xs text-center">
-                    © {new Date().getFullYear()} Tienda. Todos los derechos reservados.
+                <div className="border-t border-white/10 pt-6 flex flex-col items-center gap-4">
+                    <div className="flex flex-wrap items-center justify-center gap-2">
+                        <span className="text-xs uppercase tracking-wider text-[#cbb59e]/70 mr-1">Pagos seguros con</span>
+                        <span className="w-10 h-7 rounded bg-white flex items-center justify-center">
+                            <FaCcVisa size={22} className="text-[#1a1f71]" />
+                        </span>
+                        <span className="w-10 h-7 rounded bg-white flex items-center justify-center">
+                            <FaCcMastercard size={22} />
+                        </span>
+                        <span className="w-10 h-7 rounded bg-white flex items-center justify-center">
+                            <FaCcAmex size={22} className="text-[#2e77bc]" />
+                        </span>
+                        <span className="px-2.5 h-7 rounded bg-white flex items-center justify-center text-xs font-bold text-[#742284]">Yape</span>
+                        <span className="px-2.5 h-7 rounded bg-white flex items-center justify-center text-xs font-bold text-[#00aeef]">Plin</span>
+                    </div>
+                    <div className="text-xs text-center">
+                        © {new Date().getFullYear()} Tienda. Todos los derechos reservados.
+                    </div>
                 </div>
             </div>
 
@@ -156,7 +238,7 @@ export const Footer = () => {
                         </div>
                     </div>
                     <div className="pt-2 border-t border-neutral-100 flex justify-end">
-                        <Boton onClick={cerrarModal} variante="primario" tamanio="sm">Entendido</Boton>
+                        <Boton onClick={cerrarModal} variante="tierra" tamanio="sm">Entendido</Boton>
                     </div>
                 </div>
             </Modal>
@@ -195,7 +277,7 @@ export const Footer = () => {
                         </div>
                     </div>
                     <div className="pt-2 border-t border-neutral-100 flex justify-end">
-                        <Boton onClick={cerrarModal} variante="primario" tamanio="sm">Cerrar</Boton>
+                        <Boton onClick={cerrarModal} variante="tierra" tamanio="sm">Cerrar</Boton>
                     </div>
                 </div>
             </Modal>
@@ -219,7 +301,7 @@ export const Footer = () => {
                             className="flex-1"
                             requerido
                         />
-                        <Boton type="submit" variante="primario" className="h-10">
+                        <Boton type="submit" variante="tierra" className="h-10">
                             Buscar
                         </Boton>
                     </div>

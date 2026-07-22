@@ -108,7 +108,7 @@ const ProductoDetallePage = () => {
                                 <button
                                     key={i}
                                     onClick={() => setImagenActiva(i)}
-                                    className={`flex-shrink-0 w-16 h-20 rounded border-2 overflow-hidden transition-colors ${imagenActiva === i ? 'border-neutral-900' : 'border-transparent'
+                                    className={`flex-shrink-0 w-16 h-20 rounded border-2 overflow-hidden transition-colors ${imagenActiva === i ? 'border-[#c4956a]' : 'border-transparent'
                                         }`}
                                 >
                                     <img
@@ -164,7 +164,7 @@ const ProductoDetallePage = () => {
                                 <button
                                     onClick={() => setCantidad((c) => Math.max(1, c - 1))}
                                     disabled={cantidad <= 1}
-                                    className="w-9 h-9 border border-neutral-300 rounded text-neutral-700 hover:border-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-lg font-medium"
+                                    className="w-9 h-9 border border-neutral-300 rounded text-neutral-700 hover:border-[#c4956a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-lg font-medium"
                                 >
                                     −
                                 </button>
@@ -172,7 +172,7 @@ const ProductoDetallePage = () => {
                                 <button
                                     onClick={() => setCantidad((c) => Math.min(varianteSeleccionada.stock, c + 1))}
                                     disabled={cantidad >= varianteSeleccionada.stock}
-                                    className="w-9 h-9 border border-neutral-300 rounded text-neutral-700 hover:border-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-lg font-medium"
+                                    className="w-9 h-9 border border-neutral-300 rounded text-neutral-700 hover:border-[#c4956a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-lg font-medium"
                                 >
                                     +
                                 </button>

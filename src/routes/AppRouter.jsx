@@ -14,6 +14,7 @@ const CatalogoPage = lazy(() => import('../pages/public/CatalogoPage.jsx'))
 const ProductoDetallePage = lazy(() => import('../pages/public/ProductoDetallePage.jsx'))
 const PromocionesPublicasPage = lazy(() => import('../pages/public/PromocionesPage.jsx'))
 const LibroReclamacionesPage = lazy(() => import('../pages/public/LibroReclamacionesPage.jsx'))
+const FavoritosPage = lazy(() => import('../pages/public/FavoritosPage.jsx'))
 
 const LoginPage = lazy(() => import('../pages/auth/LoginPage.jsx'))
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage.jsx'))
@@ -60,6 +61,7 @@ const AppRouter = () => {
                         <Route path="producto/:id" element={<ProductoDetallePage />} />
                         <Route path="promociones" element={<PromocionesPublicasPage />} />
                         <Route path="libro-reclamaciones" element={<LibroReclamacionesPage />} />
+                        <Route path="favoritos" element={<FavoritosPage />} />
                     </Route>
 
                     <Route element={<AuthLayout />}>

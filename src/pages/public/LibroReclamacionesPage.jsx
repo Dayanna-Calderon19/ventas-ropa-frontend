@@ -155,7 +155,7 @@ const LibroReclamacionesPage = () => {
                         </button>
                         <a
                             href="/"
-                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-neutral-900 text-white hover:bg-neutral-700 transition-colors"
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-[#c4956a] text-white hover:bg-[#a37550] transition-colors"
                         >
                             Ir al inicio <RiArrowRightLine size={16} />
                         </a>
@@ -228,7 +228,7 @@ const LibroReclamacionesPage = () => {
                                     value={nombre}
                                     onChange={e => setNombre(e.target.value)}
                                     placeholder="Ej. Juan Pérez"
-                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.nombre ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-neutral-900 focus:border-neutral-900'}`}
+                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.nombre ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#c4956a] focus:border-[#c4956a]'}`}
                                 />
                             </div>
                             {errores.nombre && <p className="text-xs text-red-600 mt-1">{errores.nombre}</p>}
@@ -248,7 +248,7 @@ const LibroReclamacionesPage = () => {
                                     value={correo}
                                     onChange={e => setCorreo(e.target.value)}
                                     placeholder="tu@correo.com"
-                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.correo ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-neutral-900 focus:border-neutral-900'}`}
+                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.correo ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#c4956a] focus:border-[#c4956a]'}`}
                                 />
                             </div>
                             {errores.correo && <p className="text-xs text-red-600 mt-1">{errores.correo}</p>}
@@ -269,7 +269,7 @@ const LibroReclamacionesPage = () => {
                                     onChange={e => setTelefono(e.target.value.replace(/\D/g, '').slice(0, 9))}
                                     placeholder="987654321"
                                     maxLength={9}
-                                    className="w-full h-10 pl-9 pr-3 text-sm rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 transition-colors"
+                                    className="w-full h-10 pl-9 pr-3 text-sm rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#c4956a] focus:border-[#c4956a] transition-colors"
                                 />
                             </div>
                         </div>
@@ -297,7 +297,7 @@ const LibroReclamacionesPage = () => {
                                 ? 'Describe el producto o servicio con el que tuviste problemas, número de pedido, etc...'
                                 : 'Cuéntanos cómo podríamos mejorar nuestro servicio o productos...'
                         }
-                        className={`w-full px-4 py-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors resize-none ${errores.descripcion ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-neutral-900 focus:border-neutral-900'}`}
+                        className={`w-full px-4 py-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors resize-none ${errores.descripcion ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#c4956a] focus:border-[#c4956a]'}`}
                     />
                     <div className="flex items-center justify-between mt-1">
                         {errores.descripcion
@@ -319,7 +319,7 @@ const LibroReclamacionesPage = () => {
                 <button
                     type="submit"
                     disabled={enviando}
-                    className="w-full h-12 bg-neutral-900 text-white font-semibold rounded-xl hover:bg-neutral-700 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-sm active:scale-[0.99]"
+                    className="w-full h-12 bg-[#c4956a] text-white font-semibold rounded-xl hover:bg-[#a37550] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-sm active:scale-[0.99]"
                 >
                     {enviando ? (
                         <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

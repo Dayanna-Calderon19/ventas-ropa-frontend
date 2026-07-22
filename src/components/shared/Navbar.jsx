@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { RiShoppingBagLine, RiUserLine, RiMenuLine, RiCloseLine, RiSearchLine, RiDashboardLine } from 'react-icons/ri'
+import { RiShoppingBagLine, RiUserLine, RiMenuLine, RiCloseLine, RiDashboardLine, RiHeartLine, RiCloseCircleLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth.js'
 import { useCarrito } from '../../hooks/useCarrito.js'
+import { useFavoritos } from '../../hooks/useFavoritos.js'
 
 export const Navbar = () => {
     const { estaAutenticado, usuario, logout } = useAuth()
     const { cantidadItems } = useCarrito()
+    const { cantidadFavoritos } = useFavoritos()
     const navigate = useNavigate()
     const [menuAbierto, setMenuAbierto] = useState(false)
     const [menuUsuarioAbierto, setMenuUsuarioAbierto] = useState(false)
+    const [anuncioVisible, setAnuncioVisible] = useState(true)
+    const [terminoBusqueda, setTerminoBusqueda] = useState('')
 
     const enlacesNav = [
         { a: '/catalogo', etiqueta: 'Catálogo' },
@@ -22,12 +26,32 @@ export const Navbar = () => {
         navigate('/')
     }
 
+    const manejarBusqueda = (e) => {
+        e.preventDefault()
+        if (!terminoBusqueda.trim()) return
+        navigate(`/catalogo?busqueda=${encodeURIComponent(terminoBusqueda.trim())}`)
+        setTerminoBusqueda('')
+    }
+
     return (
-        <header className="sticky top-0 z-40 bg-white border-b border-neutral-200">
+        <>
+            {anuncioVisible && (
+                <div className="relative bg-[#3c2a1e] text-white text-xs sm:text-sm font-medium text-center py-2 px-8">
+                    Envío gratis en compras desde S/150 a todo el Perú
+                    <button
+                        onClick={() => setAnuncioVisible(false)}
+                        aria-label="Cerrar anuncio"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+                    >
+                        <RiCloseCircleLine size={16} />
+                    </button>
+                </div>
+            )}
+            <header className="sticky top-0 z-40 bg-white border-b border-neutral-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center gap-3">
-                        <Link to="/" className="text-xl font-bold tracking-tight text-neutral-900">
+                        <Link to="/" className="font-display text-2xl font-bold tracking-tight text-neutral-900">
                             MODA JELÚ
                         </Link>
                         {usuario?.rol === 'ADMIN' && (
@@ -44,7 +68,7 @@ export const Navbar = () => {
                                 key={e.a}
                                 to={e.a}
                                 className={({ isActive }) =>
-                                    `text-sm font-medium transition-colors ${isActive ? 'text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'
+                                    `text-sm font-medium transition-colors ${isActive ? 'text-[#c4956a]' : 'text-neutral-500 hover:text-neutral-900'
                                     }`
                                 }
                             >
@@ -54,12 +78,41 @@ export const Navbar = () => {
                     </nav>
 
                     <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => navigate('/catalogo')}
-                            className="p-2 rounded text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
-                        >
-                            <RiSearchLine size={20} />
-                        </button>
+                        <form onSubmit={manejarBusqueda} className="flex items-center">
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    value={terminoBusqueda}
+                                    onChange={(e) => setTerminoBusqueda(e.target.value)}
+                                    placeholder="Buscar productos..."
+                                    className="w-36 sm:w-56 h-9 pl-3 pr-8 text-sm rounded-full border border-neutral-300 bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#c4956a] focus:border-[#c4956a] focus:bg-white transition-all duration-200"
+                                />
+                                {terminoBusqueda && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setTerminoBusqueda('')}
+                                        aria-label="Limpiar búsqueda"
+                                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 transition-colors animate-fadeIn"
+                                    >
+                                        <RiCloseLine size={14} />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+
+                        {estaAutenticado && (
+                            <Link
+                                to="/favoritos"
+                                className="relative p-2 rounded text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                            >
+                                <RiHeartLine size={20} />
+                                {cantidadFavoritos > 0 && (
+                                    <span className="absolute top-1 right-1 w-4 h-4 bg-[#c4956a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                        {cantidadFavoritos > 9 ? '9+' : cantidadFavoritos}
+                                    </span>
+                                )}
+                            </Link>
+                        )}
 
                         <Link
                             to={estaAutenticado ? '/cliente/carrito' : '/login'}
@@ -67,7 +120,7 @@ export const Navbar = () => {
                         >
                             <RiShoppingBagLine size={20} />
                             {cantidadItems > 0 && (
-                                <span className="absolute top-1 right-1 w-4 h-4 bg-neutral-900 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                <span className="absolute top-1 right-1 w-4 h-4 bg-[#c4956a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                                     {cantidadItems > 9 ? '9+' : cantidadItems}
                                 </span>
                             )}
@@ -79,7 +132,7 @@ export const Navbar = () => {
                                     onClick={() => setMenuUsuarioAbierto((p) => !p)}
                                     className="flex items-center gap-2 p-2 rounded hover:bg-neutral-100 transition-colors"
                                 >
-                                    <div className="w-7 h-7 rounded-full bg-neutral-900 text-white text-xs font-semibold flex items-center justify-center">
+                                    <div className="w-7 h-7 rounded-full bg-[#c4956a] text-white text-xs font-semibold flex items-center justify-center">
                                         {usuario?.nombre?.charAt(0).toUpperCase()}
                                     </div>
                                 </button>
@@ -189,6 +242,7 @@ export const Navbar = () => {
                     </nav>
                 )}
             </div>
-        </header>
+            </header>
+        </>
     )
 }

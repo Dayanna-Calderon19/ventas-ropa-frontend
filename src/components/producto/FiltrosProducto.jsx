@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RiFilterLine, RiCloseLine } from 'react-icons/ri'
 import { Input } from '../ui/Input.jsx'
 import { Select } from '../ui/Select.jsx'
@@ -14,6 +14,15 @@ export const FiltrosProducto = ({ categorias = [], filtros, onAplicar, onLimpiar
         precioMin: filtros.precioMin || '',
         precioMax: filtros.precioMax || '',
     })
+
+    useEffect(() => {
+        setValores({
+            categoriaId: filtros.categoriaId || '',
+            talla: filtros.talla || '',
+            precioMin: filtros.precioMin || '',
+            precioMax: filtros.precioMax || '',
+        })
+    }, [filtros.categoriaId, filtros.talla, filtros.precioMin, filtros.precioMax])
 
     const manejarCambio = (e) => {
         const { name, value } = e.target
@@ -45,11 +54,11 @@ export const FiltrosProducto = ({ categorias = [], filtros, onAplicar, onLimpiar
                 tamanio="md"
                 icono={<RiFilterLine size={16} />}
                 onClick={() => setAbierto((p) => !p)}
-                className={hayFiltrosActivos ? 'border-neutral-900' : ''}
+                className={hayFiltrosActivos ? 'border-[#c4956a]' : ''}
             >
                 Filtros
                 {hayFiltrosActivos && (
-                    <span className="ml-1 w-5 h-5 bg-neutral-900 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    <span className="ml-1 w-5 h-5 bg-[#c4956a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                         {Object.values(valores).filter(Boolean).length}
                     </span>
                 )}
@@ -95,8 +104,8 @@ export const FiltrosProducto = ({ categorias = [], filtros, onAplicar, onLimpiar
                                                 }))
                                             }
                                             className={`px-3 py-1 text-xs rounded border transition-colors ${valores.talla === t
-                                                    ? 'bg-neutral-900 text-white border-neutral-900'
-                                                    : 'border-neutral-300 text-neutral-700 hover:border-neutral-900'
+                                                    ? 'bg-[#c4956a] text-white border-[#c4956a]'
+                                                    : 'border-neutral-300 text-neutral-700 hover:border-[#c4956a]'
                                                 }`}
                                         >
                                             {t}
@@ -133,7 +142,7 @@ export const FiltrosProducto = ({ categorias = [], filtros, onAplicar, onLimpiar
                             <Boton variante="fantasma" tamanio="sm" ancho onClick={manejarLimpiar}>
                                 Limpiar
                             </Boton>
-                            <Boton variante="primario" tamanio="sm" ancho onClick={manejarAplicar}>
+                            <Boton variante="tierra" tamanio="sm" ancho onClick={manejarAplicar}>
                                 Aplicar
                             </Boton>
                         </div>

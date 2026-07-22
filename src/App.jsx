@@ -1,5 +1,6 @@
 import { AuthProvider } from './context/AuthContext.jsx'
 import { CarritoProvider } from './context/CarritoContext.jsx'
+import { FavoritosProvider } from './context/FavoritosContext.jsx'
 import { ToastProvider } from './components/ui/Toast.jsx'
 import { ErrorBoundary } from './components/shared/ErrorBoundary.jsx'
 import AppRouter from './routes/AppRouter.jsx'
@@ -10,9 +11,11 @@ const App = () => {
     <ErrorBoundary>
       <AuthProvider>
         <CarritoProvider>
-          <ToastProvider>
-            <AppRouter />
-          </ToastProvider>
+          <FavoritosProvider>
+            <ToastProvider>
+              <AppRouter />
+            </ToastProvider>
+          </FavoritosProvider>
         </CarritoProvider>
       </AuthProvider>
     </ErrorBoundary>

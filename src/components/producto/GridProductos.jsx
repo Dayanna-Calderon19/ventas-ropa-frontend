@@ -3,7 +3,7 @@ import { SkeletonTarjeta } from '../ui/Skeleton.jsx'
 import { EstadoVacio } from '../ui/EstadoVacio.jsx'
 import { RiShoppingBagLine } from 'react-icons/ri'
 
-export const GridProductos = ({ productos = [], cargando = false, columnas = 4 }) => {
+export const GridProductos = ({ productos = [], cargando = false, columnas = 4, accionVacio = null }) => {
     const clasesGrid = {
         2: 'grid-cols-2 sm:grid-cols-2',
         3: 'grid-cols-2 sm:grid-cols-3',
@@ -26,6 +26,7 @@ export const GridProductos = ({ productos = [], cargando = false, columnas = 4 }
                 icono={<RiShoppingBagLine size={40} className="text-neutral-300" />}
                 titulo="Sin productos"
                 descripcion="No se encontraron productos con los filtros seleccionados."
+                accion={accionVacio}
             />
         )
     }
