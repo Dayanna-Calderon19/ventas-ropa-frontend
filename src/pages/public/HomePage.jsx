@@ -8,15 +8,15 @@ import { listarProductos } from '../../services/producto.service.js'
 import { listarCategorias } from '../../services/categoria.service.js'
 
 const BannerHero = () => (
-  <section className="bg-[#3c2a1e] text-white">
+  <section className="bg-[#1b2a4a] text-white">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-28 flex flex-col items-center text-center gap-6">
-      <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#cbb59e]">
+      <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#9fb0c9]">
         Nueva colección
       </span>
       <h1 className="text-4xl md:text-6xl font-bold leading-tight max-w-2xl">
         Moda que define tu estilo
       </h1>
-      <p className="text-[#cbb59e] text-base md:text-lg max-w-md">
+      <p className="text-[#9fb0c9] text-base md:text-lg max-w-md">
         Encuentra prendas únicas para cada ocasión. Envíos a todo el Perú.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 mt-2">
@@ -31,7 +31,7 @@ const BannerHero = () => (
           </Boton>
         </Link>
         <Link to="/registro">
-          <Boton variante="secundario" tamanio="lg" className="bg-transparent text-white border-white/30 hover:bg-white/10 hover:border-white/60">
+          <Boton variante="contorno" tamanio="lg">
             Crear cuenta
           </Boton>
         </Link>
@@ -63,7 +63,7 @@ const SeccionCategorias = ({ categorias, cargando }) => {
           <Link
             key={cat.id}
             to={`/catalogo?categoriaId=${cat.id}`}
-            className="flex flex-col items-center justify-center gap-2 h-24 bg-white border border-neutral-200 rounded-lg hover:border-[#c4956a] hover:shadow-sm transition-all text-sm font-medium text-neutral-700 hover:text-neutral-900"
+            className="flex flex-col items-center justify-center gap-2 h-24 bg-white border border-neutral-200 rounded-lg hover:border-[#b8933f] hover:shadow-sm transition-all text-sm font-medium text-neutral-700 hover:text-neutral-900"
           >
             {cat.imagenUrl && (
               <img src={cat.imagenUrl} alt={cat.nombre} className="w-8 h-8 object-cover rounded" />
@@ -80,7 +80,7 @@ const SeccionBanner = () => (
   <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
     <div className="bg-[#f5f0e8] rounded-xl px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div>
-        <p className="text-xs font-semibold tracking-widest uppercase text-[#a37550] mb-2">
+        <p className="text-xs font-semibold tracking-widest uppercase text-[#8f7130] mb-2">
           Oferta especial
         </p>
         <h2 className="text-2xl font-bold text-neutral-900 mb-1">Hasta 40% de descuento</h2>

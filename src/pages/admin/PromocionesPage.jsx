@@ -169,7 +169,7 @@ const PromocionesPage = () => {
             render: (p) => (
                 <div>
                     <p className="font-medium text-neutral-900">{p.nombre}</p>
-                    {p.codigo && <span className="text-[10px] font-bold text-[#c4956a] uppercase tracking-wider bg-[#c4956a]/10 px-1.5 py-0.5 rounded">{p.codigo}</span>}
+                    {p.codigo && <span className="text-[10px] font-bold text-[#b8933f] uppercase tracking-wider bg-[#b8933f]/10 px-1.5 py-0.5 rounded">{p.codigo}</span>}
                 </div>
             )
         },

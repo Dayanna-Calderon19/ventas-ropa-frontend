@@ -356,7 +356,7 @@ export const NavbarAdmin = ({ onAbrirSidebar }) => {
                     to="/admin/configuracion"
                     className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
                 >
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c4956a] to-[#a37550] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#b8933f] to-[#8f7130] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
                         {usuario?.nombre?.charAt(0).toUpperCase()}
                     </div>
                     <span className="hidden sm:block text-[13px] font-medium text-neutral-700 max-w-[120px] truncate">

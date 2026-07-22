@@ -155,7 +155,7 @@ const LibroReclamacionesPage = () => {
                         </button>
                         <a
                             href="/"
-                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-[#c4956a] text-white hover:bg-[#a37550] transition-colors"
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-[#b8933f] text-white hover:bg-[#8f7130] transition-colors"
                         >
                             Ir al inicio <RiArrowRightLine size={16} />
                         </a>
@@ -203,7 +203,7 @@ const LibroReclamacionesPage = () => {
                 {/* Datos personales */}
                 <div className="bg-white border border-neutral-200 rounded-xl p-6 mb-4 shadow-sm">
                     <h2 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-5 flex items-center gap-2">
-                        <RiUserLine size={16} className="text-[#c4956a]" />
+                        <RiUserLine size={16} className="text-[#b8933f]" />
                         Datos de contacto
                     </h2>
 
@@ -228,7 +228,7 @@ const LibroReclamacionesPage = () => {
                                     value={nombre}
                                     onChange={e => setNombre(e.target.value)}
                                     placeholder="Ej. Juan Pérez"
-                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.nombre ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#c4956a] focus:border-[#c4956a]'}`}
+                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.nombre ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#b8933f] focus:border-[#b8933f]'}`}
                                 />
                             </div>
                             {errores.nombre && <p className="text-xs text-red-600 mt-1">{errores.nombre}</p>}
@@ -248,7 +248,7 @@ const LibroReclamacionesPage = () => {
                                     value={correo}
                                     onChange={e => setCorreo(e.target.value)}
                                     placeholder="tu@correo.com"
-                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.correo ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#c4956a] focus:border-[#c4956a]'}`}
+                                    className={`w-full h-10 pl-9 pr-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors ${errores.correo ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#b8933f] focus:border-[#b8933f]'}`}
                                 />
                             </div>
                             {errores.correo && <p className="text-xs text-red-600 mt-1">{errores.correo}</p>}
@@ -269,7 +269,7 @@ const LibroReclamacionesPage = () => {
                                     onChange={e => setTelefono(e.target.value.replace(/\D/g, '').slice(0, 9))}
                                     placeholder="987654321"
                                     maxLength={9}
-                                    className="w-full h-10 pl-9 pr-3 text-sm rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#c4956a] focus:border-[#c4956a] transition-colors"
+                                    className="w-full h-10 pl-9 pr-3 text-sm rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#b8933f] focus:border-[#b8933f] transition-colors"
                                 />
                             </div>
                         </div>
@@ -279,7 +279,7 @@ const LibroReclamacionesPage = () => {
                 {/* Descripción */}
                 <div className="bg-white border border-neutral-200 rounded-xl p-6 mb-6 shadow-sm">
                     <h2 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-5 flex items-center gap-2">
-                        <RiFileTextLine size={16} className="text-[#c4956a]" />
+                        <RiFileTextLine size={16} className="text-[#b8933f]" />
                         Descripción de la {tipoActual?.etiqueta.toLowerCase() || 'solicitud'}
                     </h2>
                     <label className="text-sm font-medium text-neutral-700 block mb-1.5">
@@ -297,7 +297,7 @@ const LibroReclamacionesPage = () => {
                                 ? 'Describe el producto o servicio con el que tuviste problemas, número de pedido, etc...'
                                 : 'Cuéntanos cómo podríamos mejorar nuestro servicio o productos...'
                         }
-                        className={`w-full px-4 py-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors resize-none ${errores.descripcion ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#c4956a] focus:border-[#c4956a]'}`}
+                        className={`w-full px-4 py-3 text-sm rounded-lg border bg-white text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 transition-colors resize-none ${errores.descripcion ? 'border-red-400 focus:ring-red-400' : 'border-neutral-300 focus:ring-[#b8933f] focus:border-[#b8933f]'}`}
                     />
                     <div className="flex items-center justify-between mt-1">
                         {errores.descripcion
@@ -319,7 +319,7 @@ const LibroReclamacionesPage = () => {
                 <button
                     type="submit"
                     disabled={enviando}
-                    className="w-full h-12 bg-[#c4956a] text-white font-semibold rounded-xl hover:bg-[#a37550] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-sm active:scale-[0.99]"
+                    className="w-full h-12 bg-[#b8933f] text-white font-semibold rounded-xl hover:bg-[#8f7130] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-sm active:scale-[0.99]"
                 >
                     {enviando ? (
                         <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

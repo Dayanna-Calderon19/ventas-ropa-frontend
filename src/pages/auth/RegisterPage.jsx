@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { RiUserLine, RiMailLine, RiLockLine, RiPhoneLine } from 'react-icons/ri'
+import { useState } from 'react'
+import { RiUserLine, RiMailLine, RiLockLine, RiPhoneLine, RiEyeLine, RiEyeOffLine, RiCheckLine, RiCloseLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth.js'
 import { useFormulario } from '../../hooks/useFormulario.js'
 import { useToast } from '../../components/ui/Toast.jsx'
@@ -12,13 +13,60 @@ const VALORES_INICIALES = {
     nombre: '',
     correo: '',
     contrasena: '',
+    confirmarContrasena: '',
     telefono: '',
+    aceptaTerminos: false,
+}
+
+const REGLAS_CONTRASENA = [
+    { clave: 'longitud', etiqueta: 'Mínimo 8 caracteres', cumple: (v) => v.length >= 8 },
+    { clave: 'mayuscula', etiqueta: 'Una letra mayúscula', cumple: (v) => /[A-Z]/.test(v) },
+    { clave: 'numero', etiqueta: 'Un número', cumple: (v) => /[0-9]/.test(v) },
+]
+
+const IndicadorContrasena = ({ contrasena }) => {
+    if (!contrasena) return null
+
+    const cumplidas = REGLAS_CONTRASENA.filter((r) => r.cumple(contrasena)).length
+    const nivel = cumplidas <= 1 ? 'Débil' : cumplidas === 2 ? 'Media' : 'Fuerte'
+    const colorBarra = cumplidas <= 1 ? 'bg-red-500' : cumplidas === 2 ? 'bg-amber-500' : 'bg-green-500'
+    const colorTexto = cumplidas <= 1 ? 'text-red-600' : cumplidas === 2 ? 'text-amber-600' : 'text-green-600'
+
+    return (
+        <div className="flex flex-col gap-2 -mt-2">
+            <div className="flex items-center gap-2">
+                <div className="flex-1 h-1.5 rounded-full bg-neutral-200 overflow-hidden">
+                    <div
+                        className={`h-full rounded-full transition-all duration-300 ${colorBarra}`}
+                        style={{ width: `${(cumplidas / REGLAS_CONTRASENA.length) * 100}%` }}
+                    />
+                </div>
+                <span className={`text-xs font-semibold ${colorTexto}`}>{nivel}</span>
+            </div>
+            <ul className="flex flex-col gap-1">
+                {REGLAS_CONTRASENA.map((r) => {
+                    const ok = r.cumple(contrasena)
+                    return (
+                        <li
+                            key={r.clave}
+                            className={`flex items-center gap-1.5 text-xs ${ok ? 'text-green-600' : 'text-neutral-400'}`}
+                        >
+                            {ok ? <RiCheckLine size={14} /> : <RiCloseLine size={14} />}
+                            {r.etiqueta}
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
+    )
 }
 
 const RegisterPage = () => {
     const { registro } = useAuth()
     const { exito } = useToast()
     const navigate = useNavigate()
+    const [mostrarContrasena, setMostrarContrasena] = useState(false)
+    const [mostrarConfirmar, setMostrarConfirmar] = useState(false)
 
     const {
         valores,
@@ -32,7 +80,7 @@ const RegisterPage = () => {
     const manejarSubmit = async (e) => {
         e.preventDefault()
         await manejarEnvio(async (datos) => {
-            const payload = { ...datos }
+            const { confirmarContrasena, aceptaTerminos, ...payload } = datos
             if (!payload.telefono) delete payload.telefono
             await registro(payload)
             exito('Cuenta creada correctamente')
@@ -80,14 +128,46 @@ const RegisterPage = () => {
 
                 <Input
                     label="Contraseña"
-                    type="password"
+                    type={mostrarContrasena ? 'text' : 'password'}
                     name="contrasena"
                     value={valores.contrasena}
                     onChange={manejarCambio}
                     error={errores.contrasena}
                     icono={<RiLockLine size={16} />}
+                    iconoDerecha={
+                        <button
+                            type="button"
+                            onClick={() => setMostrarContrasena(!mostrarContrasena)}
+                            className="text-neutral-500 hover:text-neutral-700"
+                        >
+                            {mostrarContrasena ? <RiEyeOffLine size={16} /> : <RiEyeLine size={16} />}
+                        </button>
+                    }
                     placeholder="Mínimo 8 caracteres"
-                    ayuda="Debe contener al menos una mayúscula y un número"
+                    requerido
+                    autoComplete="new-password"
+                />
+
+                <IndicadorContrasena contrasena={valores.contrasena} />
+
+                <Input
+                    label="Confirmar contraseña"
+                    type={mostrarConfirmar ? 'text' : 'password'}
+                    name="confirmarContrasena"
+                    value={valores.confirmarContrasena}
+                    onChange={manejarCambio}
+                    error={errores.confirmarContrasena}
+                    icono={<RiLockLine size={16} />}
+                    iconoDerecha={
+                        <button
+                            type="button"
+                            onClick={() => setMostrarConfirmar(!mostrarConfirmar)}
+                            className="text-neutral-500 hover:text-neutral-700"
+                        >
+                            {mostrarConfirmar ? <RiEyeOffLine size={16} /> : <RiEyeLine size={16} />}
+                        </button>
+                    }
+                    placeholder="Repite tu contraseña"
                     requerido
                     autoComplete="new-password"
                 />
@@ -104,8 +184,27 @@ const RegisterPage = () => {
                     autoComplete="tel"
                 />
 
+                <div>
+                    <label className="flex items-start gap-2.5 text-sm text-neutral-600 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            name="aceptaTerminos"
+                            checked={valores.aceptaTerminos}
+                            onChange={manejarCambio}
+                            className="mt-0.5 w-4 h-4 rounded border-neutral-300 text-[#b8933f] focus:ring-[#b8933f] cursor-pointer"
+                        />
+                        <span>
+                            Acepto los <strong>Términos y Condiciones</strong> y la <strong>Política de Privacidad</strong>
+                        </span>
+                    </label>
+                    {errores.aceptaTerminos && (
+                        <p className="text-xs text-red-600 mt-1.5">{errores.aceptaTerminos}</p>
+                    )}
+                </div>
+
                 <Boton
                     type="submit"
+                    variante="tierra"
                     cargando={enviando}
                     ancho
                     tamanio="lg"

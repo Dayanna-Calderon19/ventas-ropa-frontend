@@ -122,7 +122,7 @@ const UsuariosPage = () => {
             clave: 'nombre', titulo: 'Usuario',
             render: (u) => (
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-md bg-neutral-800 flex items-center justify-center text-[#c4956a] text-xs font-bold">
+                    <div className="w-8 h-8 rounded-md bg-neutral-800 flex items-center justify-center text-[#b8933f] text-xs font-bold">
                         {u.nombre.charAt(0)}
                     </div>
                     <div>

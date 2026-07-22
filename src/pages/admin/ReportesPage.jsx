@@ -72,7 +72,7 @@ const ReportesPage = () => {
                                     <p className="text-sm font-medium text-neutral-800">{p.nombre}</p>
                                     <div className="w-full bg-neutral-100 h-1.5 rounded-full mt-1">
                                         <div
-                                            className="bg-[#c4956a] h-full rounded-full"
+                                            className="bg-[#b8933f] h-full rounded-full"
                                             style={{ width: `${(p.cantidad / (productosMasVendidos[0].cantidad || 1)) * 100}%` }}
                                         />
                                     </div>

@@ -50,9 +50,9 @@ export const TarjetaProducto = ({ producto }) => {
                 <button
                     onClick={manejarFavorito}
                     aria-label={esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos'}
-                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-neutral-500 hover:text-[#c4956a] transition-colors shadow-sm"
+                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-neutral-500 hover:text-[#b8933f] transition-colors shadow-sm"
                 >
-                    {esFavorito ? <RiHeartFill size={16} className="text-[#c4956a]" /> : <RiHeartLine size={16} />}
+                    {esFavorito ? <RiHeartFill size={16} className="text-[#b8933f]" /> : <RiHeartLine size={16} />}
                 </button>
 
                 {producto.destacado && !sinStock && (

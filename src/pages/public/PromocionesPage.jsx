@@ -30,9 +30,9 @@ const TarjetaPromocion = ({ promo }) => {
     }
 
     return (
-        <div className="flex flex-col bg-white border border-neutral-200 rounded-lg p-6 shadow-sm hover:shadow-md hover:border-[#c4956a]/40 transition-all duration-200">
+        <div className="flex flex-col bg-white border border-neutral-200 rounded-lg p-6 shadow-sm hover:shadow-md hover:border-[#b8933f]/40 transition-all duration-200">
             <div className="flex items-start justify-between gap-3 mb-3">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#c4956a] text-white text-sm font-bold">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#b8933f] text-white text-sm font-bold">
                     {obtenerEtiquetaDescuento(promo)}
                 </span>
                 {terminaPronto(promo.finEn) && (
@@ -57,10 +57,10 @@ const TarjetaPromocion = ({ promo }) => {
             {promo.codigo && (
                 <button
                     onClick={copiarCodigo}
-                    className="flex items-center justify-between gap-2 border border-dashed border-[#c4956a] bg-[#c4956a]/5 rounded-lg px-3 py-2 mb-3 text-left hover:bg-[#c4956a]/10 transition-colors"
+                    className="flex items-center justify-between gap-2 border border-dashed border-[#b8933f] bg-[#b8933f]/5 rounded-lg px-3 py-2 mb-3 text-left hover:bg-[#b8933f]/10 transition-colors"
                 >
                     <span className="font-mono font-semibold text-sm text-neutral-900">{promo.codigo}</span>
-                    <span className="flex items-center gap-1 text-xs font-medium text-[#a37550]">
+                    <span className="flex items-center gap-1 text-xs font-medium text-[#8f7130]">
                         <RiFileCopyLine size={14} />
                         Copiar
                     </span>

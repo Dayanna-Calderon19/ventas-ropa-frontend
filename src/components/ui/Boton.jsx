@@ -3,7 +3,8 @@ const variantes = {
     secundario: 'bg-white text-neutral-900 border border-neutral-300 hover:border-neutral-900',
     fantasma: 'bg-transparent text-neutral-900 border border-transparent hover:bg-neutral-100',
     peligro: 'bg-red-600 text-white border border-red-600 hover:bg-red-700',
-    tierra: 'bg-[#c4956a] text-white border border-[#c4956a] hover:bg-[#a37550]',
+    tierra: 'bg-[#b8933f] text-white border border-[#b8933f] hover:bg-[#8f7130]',
+    contorno: 'bg-transparent text-white border border-white/30 hover:bg-white/10 hover:border-white/60',
 }
 
 const tamanios = {

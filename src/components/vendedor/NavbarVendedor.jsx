@@ -290,7 +290,7 @@ export const NavbarVendedor = ({ onAbrirSidebar }) => {
 
                 <div className="flex items-center gap-3">
 
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c4956a] to-[#9d6f4a] text-white flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#b8933f] to-[#9d6f4a] text-white flex items-center justify-center font-bold">
 
                         {usuario?.nombre
                             ?.split(" ")

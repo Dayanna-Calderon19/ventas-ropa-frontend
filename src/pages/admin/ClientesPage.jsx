@@ -34,7 +34,7 @@ const DetalleCliente = ({ clienteId }) => {
     return (
         <div className="flex flex-col gap-6">
             <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center text-[#c4956a]">
+                <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center text-[#b8933f]">
                     <RiUserLine size={32} />
                 </div>
                 <div>

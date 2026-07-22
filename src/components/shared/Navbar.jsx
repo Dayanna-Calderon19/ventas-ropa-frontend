@@ -36,7 +36,7 @@ export const Navbar = () => {
     return (
         <>
             {anuncioVisible && (
-                <div className="relative bg-[#3c2a1e] text-white text-xs sm:text-sm font-medium text-center py-2 px-8">
+                <div className="relative bg-[#1b2a4a] text-white text-xs sm:text-sm font-medium text-center py-2 px-8">
                     Envío gratis en compras desde S/150 a todo el Perú
                     <button
                         onClick={() => setAnuncioVisible(false)}
@@ -51,11 +51,11 @@ export const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center gap-3">
-                        <Link to="/" className="font-display text-2xl font-bold tracking-tight text-neutral-900">
-                            MODA JELÚ
+                        <Link to="/" className="flex items-center">
+                            <img src="/logo-secundario.png" alt="MODA JELÚ" className="h-11 w-auto object-contain" />
                         </Link>
                         {usuario?.rol === 'ADMIN' && (
-                            <span className="hidden sm:flex items-center gap-1 px-2 py-0.5 bg-[#c4956a]/10 text-[#c4956a] text-[10px] font-bold uppercase tracking-wider rounded border border-[#c4956a]/20">
+                            <span className="hidden sm:flex items-center gap-1 px-2 py-0.5 bg-[#b8933f]/10 text-[#b8933f] text-[10px] font-bold uppercase tracking-wider rounded border border-[#b8933f]/20">
                                 <RiDashboardLine size={10} />
                                 MODO ADMIN
                             </span>
@@ -68,7 +68,7 @@ export const Navbar = () => {
                                 key={e.a}
                                 to={e.a}
                                 className={({ isActive }) =>
-                                    `text-sm font-medium transition-colors ${isActive ? 'text-[#c4956a]' : 'text-neutral-500 hover:text-neutral-900'
+                                    `text-sm font-medium transition-colors ${isActive ? 'text-[#b8933f]' : 'text-neutral-500 hover:text-neutral-900'
                                     }`
                                 }
                             >
@@ -85,7 +85,7 @@ export const Navbar = () => {
                                     value={terminoBusqueda}
                                     onChange={(e) => setTerminoBusqueda(e.target.value)}
                                     placeholder="Buscar productos..."
-                                    className="w-36 sm:w-56 h-9 pl-3 pr-8 text-sm rounded-full border border-neutral-300 bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#c4956a] focus:border-[#c4956a] focus:bg-white transition-all duration-200"
+                                    className="w-36 sm:w-56 h-9 pl-3 pr-8 text-sm rounded-full border border-neutral-300 bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#b8933f] focus:border-[#b8933f] focus:bg-white transition-all duration-200"
                                 />
                                 {terminoBusqueda && (
                                     <button
@@ -107,7 +107,7 @@ export const Navbar = () => {
                             >
                                 <RiHeartLine size={20} />
                                 {cantidadFavoritos > 0 && (
-                                    <span className="absolute top-1 right-1 w-4 h-4 bg-[#c4956a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                    <span className="absolute top-1 right-1 w-4 h-4 bg-[#b8933f] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                                         {cantidadFavoritos > 9 ? '9+' : cantidadFavoritos}
                                     </span>
                                 )}
@@ -120,7 +120,7 @@ export const Navbar = () => {
                         >
                             <RiShoppingBagLine size={20} />
                             {cantidadItems > 0 && (
-                                <span className="absolute top-1 right-1 w-4 h-4 bg-[#c4956a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                <span className="absolute top-1 right-1 w-4 h-4 bg-[#b8933f] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                                     {cantidadItems > 9 ? '9+' : cantidadItems}
                                 </span>
                             )}
@@ -132,7 +132,7 @@ export const Navbar = () => {
                                     onClick={() => setMenuUsuarioAbierto((p) => !p)}
                                     className="flex items-center gap-2 p-2 rounded hover:bg-neutral-100 transition-colors"
                                 >
-                                    <div className="w-7 h-7 rounded-full bg-[#c4956a] text-white text-xs font-semibold flex items-center justify-center">
+                                    <div className="w-7 h-7 rounded-full bg-[#b8933f] text-white text-xs font-semibold flex items-center justify-center">
                                         {usuario?.nombre?.charAt(0).toUpperCase()}
                                     </div>
                                 </button>
@@ -149,7 +149,7 @@ export const Navbar = () => {
                                             {usuario?.rol === 'ADMIN' && (
                                                 <Link
                                                     to="/admin"
-                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-[#c4956a] font-semibold hover:bg-neutral-50 transition-colors"
+                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-[#b8933f] font-semibold hover:bg-neutral-50 transition-colors"
                                                     onClick={() => setMenuUsuarioAbierto(false)}
                                                 >
                                                     <RiDashboardLine size={16} />
@@ -160,7 +160,7 @@ export const Navbar = () => {
                                             {usuario?.rol === 'VENDEDOR' && (
                                                 <Link
                                                     to="/vendedor"
-                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-[#c4956a] font-semibold hover:bg-neutral-50 transition-colors"
+                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-[#b8933f] font-semibold hover:bg-neutral-50 transition-colors"
                                                     onClick={() => setMenuUsuarioAbierto(false)}
                                                 >
                                                     <RiDashboardLine size={16} />

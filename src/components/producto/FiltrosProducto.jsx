@@ -54,11 +54,11 @@ export const FiltrosProducto = ({ categorias = [], filtros, onAplicar, onLimpiar
                 tamanio="md"
                 icono={<RiFilterLine size={16} />}
                 onClick={() => setAbierto((p) => !p)}
-                className={hayFiltrosActivos ? 'border-[#c4956a]' : ''}
+                className={hayFiltrosActivos ? 'border-[#b8933f]' : ''}
             >
                 Filtros
                 {hayFiltrosActivos && (
-                    <span className="ml-1 w-5 h-5 bg-[#c4956a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    <span className="ml-1 w-5 h-5 bg-[#b8933f] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                         {Object.values(valores).filter(Boolean).length}
                     </span>
                 )}
@@ -104,8 +104,8 @@ export const FiltrosProducto = ({ categorias = [], filtros, onAplicar, onLimpiar
                                                 }))
                                             }
                                             className={`px-3 py-1 text-xs rounded border transition-colors ${valores.talla === t
-                                                    ? 'bg-[#c4956a] text-white border-[#c4956a]'
-                                                    : 'border-neutral-300 text-neutral-700 hover:border-[#c4956a]'
+                                                    ? 'bg-[#b8933f] text-white border-[#b8933f]'
+                                                    : 'border-neutral-300 text-neutral-700 hover:border-[#b8933f]'
                                                 }`}
                                         >
                                             {t}

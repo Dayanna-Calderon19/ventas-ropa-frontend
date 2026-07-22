@@ -4,7 +4,7 @@ const variantes = {
     error: 'bg-red-100 text-red-700',
     alerta: 'bg-orange-100 text-orange-700',
     info: 'bg-blue-100 text-blue-700',
-    tierra: 'bg-[#f5f0e8] text-[#a37550]',
+    tierra: 'bg-[#f5f0e8] text-[#8f7130]',
 }
 
 export const Badge = ({ children, variante = 'default', className = '' }) => {

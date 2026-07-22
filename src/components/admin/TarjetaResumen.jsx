@@ -7,7 +7,7 @@ export const TarjetaResumen = ({ titulo, valor, subtitulo, extra, Icono, color =
         azul: 'bg-blue-100 text-blue-600',
         naranja: 'bg-orange-100 text-orange-600',
         rojo: 'bg-red-100 text-red-600',
-        tierra: 'bg-[#f5f0e8] text-[#a37550]',
+        tierra: 'bg-[#f5f0e8] text-[#8f7130]',
     }
 
     if (cargando) {

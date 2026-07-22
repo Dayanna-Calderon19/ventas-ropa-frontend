@@ -72,7 +72,7 @@ export const Footer = () => {
     }
 
     return (
-        <footer className="bg-[#3c2a1e] text-[#cbb59e] mt-auto">
+        <footer className="bg-[#1b2a4a] text-[#9fb0c9] mt-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
                 <div className="border-b border-white/10 pb-8 mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -80,7 +80,7 @@ export const Footer = () => {
                         <p className="text-sm mt-1">Recibe ofertas exclusivas y novedades de colección en tu correo.</p>
                     </div>
                     {suscrito ? (
-                        <p className="text-sm text-[#c4956a] font-semibold flex items-center gap-2">
+                        <p className="text-sm text-[#b8933f] font-semibold flex items-center gap-2">
                             <RiCheckLine size={18} />
                             ¡Gracias por suscribirte!
                         </p>
@@ -114,7 +114,7 @@ export const Footer = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={nombre}
-                                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c4956a] text-white flex items-center justify-center transition-colors"
+                                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#b8933f] text-white flex items-center justify-center transition-colors"
                                 >
                                     <Icono size={15} />
                                 </a>
@@ -159,7 +159,7 @@ export const Footer = () => {
                             <li className="pt-2 border-t border-white/10">
                                 <Link
                                     to="/libro-reclamaciones"
-                                    className="hover:text-white transition-colors flex items-center gap-2 text-[#c4956a] font-semibold"
+                                    className="hover:text-white transition-colors flex items-center gap-2 text-[#b8933f] font-semibold"
                                 >
                                     <RiBookOpenLine size={20} />
                                     Libro de Reclamaciones
@@ -170,7 +170,7 @@ export const Footer = () => {
                 </div>
                 <div className="border-t border-white/10 pt-6 flex flex-col items-center gap-4">
                     <div className="flex flex-wrap items-center justify-center gap-2">
-                        <span className="text-xs uppercase tracking-wider text-[#cbb59e]/70 mr-1">Pagos seguros con</span>
+                        <span className="text-xs uppercase tracking-wider text-[#9fb0c9]/70 mr-1">Pagos seguros con</span>
                         <span className="w-10 h-7 rounded bg-white flex items-center justify-center">
                             <FaCcVisa size={22} className="text-[#1a1f71]" />
                         </span>
@@ -201,7 +201,7 @@ export const Footer = () => {
                     </p>
                     <div className="space-y-3">
                         <div className="flex items-center gap-3 text-sm text-neutral-700">
-                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#a37550] flex items-center justify-center flex-shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#8f7130] flex items-center justify-center flex-shrink-0">
                                 <RiPhoneLine size={16} />
                             </div>
                             <div>
@@ -210,7 +210,7 @@ export const Footer = () => {
                             </div>
                         </div>
                         <div className="flex items-center gap-3 text-sm text-neutral-700">
-                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#a37550] flex items-center justify-center flex-shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#8f7130] flex items-center justify-center flex-shrink-0">
                                 <RiMailLine size={16} />
                             </div>
                             <div>
@@ -219,7 +219,7 @@ export const Footer = () => {
                             </div>
                         </div>
                         <div className="flex items-center gap-3 text-sm text-neutral-700">
-                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#a37550] flex items-center justify-center flex-shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#8f7130] flex items-center justify-center flex-shrink-0">
                                 <RiMapPinLine size={16} />
                             </div>
                             <div>
@@ -228,7 +228,7 @@ export const Footer = () => {
                             </div>
                         </div>
                         <div className="flex items-center gap-3 text-sm text-neutral-700">
-                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#a37550] flex items-center justify-center flex-shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-[#f5f0e8] text-[#8f7130] flex items-center justify-center flex-shrink-0">
                                 <RiTimeLine size={16} />
                             </div>
                             <div>
@@ -255,21 +255,21 @@ export const Footer = () => {
                     </p>
                     <div className="space-y-3">
                         <div className="flex items-start gap-3 text-sm text-neutral-700">
-                            <RiShieldCheckLine size={18} className="text-[#a37550] mt-0.5 flex-shrink-0" />
+                            <RiShieldCheckLine size={18} className="text-[#8f7130] mt-0.5 flex-shrink-0" />
                             <div>
                                 <p className="font-semibold">Plazo Máximo</p>
                                 <p className="text-neutral-500 text-xs">Hasta 7 días hábiles después de haber recibido tu pedido.</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3 text-sm text-neutral-700">
-                            <RiShieldCheckLine size={18} className="text-[#a37550] mt-0.5 flex-shrink-0" />
+                            <RiShieldCheckLine size={18} className="text-[#8f7130] mt-0.5 flex-shrink-0" />
                             <div>
                                 <p className="font-semibold">Estado del Producto</p>
                                 <p className="text-neutral-500 text-xs">Debe encontrarse en perfectas condiciones, con etiquetas originales y sin señales de uso.</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3 text-sm text-neutral-700">
-                            <RiShieldCheckLine size={18} className="text-[#a37550] mt-0.5 flex-shrink-0" />
+                            <RiShieldCheckLine size={18} className="text-[#8f7130] mt-0.5 flex-shrink-0" />
                             <div>
                                 <p className="font-semibold">Proceso de Retorno</p>
                                 <p className="text-neutral-500 text-xs">Escríbenos a soporte@modajelu.com o envíanos un WhatsApp adjuntando tu boleta/comprobante de compra.</p>

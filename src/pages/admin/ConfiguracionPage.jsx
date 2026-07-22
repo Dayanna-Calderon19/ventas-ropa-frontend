@@ -74,7 +74,7 @@ const ConfiguracionPage = () => {
                 <div className="lg:col-span-2 space-y-6">
                     <section className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
                         <div className="px-6 py-4 border-b border-neutral-100 flex items-center gap-3">
-                            <RiUserLine className="text-[#c4956a]" size={20} />
+                            <RiUserLine className="text-[#b8933f]" size={20} />
                             <h3 className="text-sm font-bold text-neutral-900 uppercase tracking-wider">Mi Perfil</h3>
                         </div>
                         <div className="p-6">
@@ -107,7 +107,7 @@ const ConfiguracionPage = () => {
 
                     <section className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
                         <div className="px-6 py-4 border-b border-neutral-100 flex items-center gap-3">
-                            <RiLockPasswordLine className="text-[#c4956a]" size={20} />
+                            <RiLockPasswordLine className="text-[#b8933f]" size={20} />
                             <h3 className="text-sm font-bold text-neutral-900 uppercase tracking-wider">Seguridad</h3>
                         </div>
                         <div className="p-6">
@@ -120,7 +120,7 @@ const ConfiguracionPage = () => {
                 <div className="space-y-6">
                     <section className="bg-neutral-900 text-white rounded-lg p-6">
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-[#c4956a] flex items-center justify-center text-white text-lg font-bold">
+                            <div className="w-10 h-10 rounded-full bg-[#b8933f] flex items-center justify-center text-white text-lg font-bold">
                                 {usuario?.nombre?.charAt(0).toUpperCase()}
                             </div>
                             <div>

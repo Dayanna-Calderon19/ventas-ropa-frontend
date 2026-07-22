@@ -40,7 +40,9 @@ export const validarFormularioRegistro = ({
     nombre,
     correo,
     contrasena,
+    confirmarContrasena,
     telefono,
+    aceptaTerminos,
 }) => {
     const errores = {};
     if (!nombre || nombre.trim().length < 2)
@@ -51,8 +53,14 @@ export const validarFormularioRegistro = ({
     else if (!esContrasenaValida(contrasena)) {
         errores.contrasena = "Mínimo 8 caracteres, una mayúscula y un número";
     }
+    if (!confirmarContrasena)
+        errores.confirmarContrasena = "Confirma tu contraseña";
+    else if (confirmarContrasena !== contrasena)
+        errores.confirmarContrasena = "Las contraseñas no coinciden";
     if (telefono && !esTelefonoValido(telefono))
         errores.telefono = "El teléfono no es válido";
+    if (!aceptaTerminos)
+        errores.aceptaTerminos = "Debes aceptar los términos y condiciones";
     return errores;
 };
 

@@ -94,6 +94,7 @@ const LoginPage = () => {
 
                 <Boton
                     type="submit"
+                    variante="tierra"
                     cargando={enviando}
                     ancho
                     tamanio="lg"

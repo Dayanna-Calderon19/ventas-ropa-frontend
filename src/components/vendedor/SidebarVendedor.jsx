@@ -43,7 +43,7 @@ const ItemNav = ({ item, alertas, onClick }) => {
                 <>
                     <Icono
                         size={16}
-                        className={`flex-shrink-0 transition-colors ${isActive ? 'text-[#c4956a]' : 'text-neutral-500 group-hover:text-neutral-300'}`}
+                        className={`flex-shrink-0 transition-colors ${isActive ? 'text-[#b8933f]' : 'text-neutral-500 group-hover:text-neutral-300'}`}
                     />
                     <span className="flex-1 truncate">{etiqueta}</span>
                     <BadgeAlerta count={count} variante="alerta" />
@@ -77,7 +77,7 @@ export const SidebarVendedor = ({ cerrar = null }) => {
             {/* Logo */}
             <div className="flex items-center justify-between px-4 h-[60px] border-b border-white/5 flex-shrink-0">
                 <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-md bg-[#c4956a] flex items-center justify-center flex-shrink-0">
+                    <div className="w-7 h-7 rounded-md bg-[#b8933f] flex items-center justify-center flex-shrink-0">
                         <RiStoreLine size={15} className="text-white" />
                     </div>
                     <div>
@@ -96,7 +96,7 @@ export const SidebarVendedor = ({ cerrar = null }) => {
             <div className="px-3 pt-4">
                 <button
                     onClick={manejarNuevaVenta}
-                    className="w-full flex items-center justify-center gap-2 px-3 py-3 rounded-lg bg-[#c4956a] hover:bg-[#a37550] text-white text-[13px] font-semibold transition-colors shadow-lg shadow-[#c4956a]/20"
+                    className="w-full flex items-center justify-center gap-2 px-3 py-3 rounded-lg bg-[#b8933f] hover:bg-[#8f7130] text-white text-[13px] font-semibold transition-colors shadow-lg shadow-[#b8933f]/20"
                 >
                     <RiAddCircleLine size={17} />
                     Nueva venta
@@ -121,7 +121,7 @@ export const SidebarVendedor = ({ cerrar = null }) => {
                         onClick={() => setMenuUsuarioAbierto((p) => !p)}
                         className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-white/6 transition-colors group"
                     >
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c4956a] to-[#a37550] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#b8933f] to-[#8f7130] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
                             {usuario?.nombre?.charAt(0).toUpperCase()}
                         </div>
                         <div className="flex-1 min-w-0 text-left">

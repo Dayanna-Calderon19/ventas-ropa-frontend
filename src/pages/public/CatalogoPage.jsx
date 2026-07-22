@@ -112,7 +112,7 @@ const CatalogoPage = () => {
                         <button
                             key={chip.clave}
                             onClick={() => quitarFiltro(chip.clave)}
-                            className="flex items-center gap-1.5 pl-3 pr-2 py-1 text-xs font-medium rounded-full bg-[#c4956a]/10 text-[#a37550] hover:bg-[#c4956a]/20 transition-colors animate-fadeIn"
+                            className="flex items-center gap-1.5 pl-3 pr-2 py-1 text-xs font-medium rounded-full bg-[#b8933f]/10 text-[#8f7130] hover:bg-[#b8933f]/20 transition-colors animate-fadeIn"
                         >
                             {chip.etiqueta}
                             <RiCloseLine size={14} />
